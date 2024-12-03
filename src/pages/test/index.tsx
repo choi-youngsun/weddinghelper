@@ -1,4 +1,5 @@
 import Button from '@/components/@shared/Button';
+import Input from '@/components/@shared/Input';
 
 export default function Test() {
   return (
@@ -47,6 +48,12 @@ export default function Test() {
       <Button buttonColor="red" textColor="white" textWeight="bold">
         삭제
       </Button>
+      <Input border="none" height={40} />
+      <Input placeholder="이름을 입력해주세요" />
+      <Input
+        placeholder="이름을 입력해주세요"
+        errorMessage="이름은 필수 항목입니다!"
+      />
     </main>
   );
 }

@@ -41,6 +41,9 @@ export default {
           pink: '#FF8C8C',
           blue: '#9AA7FF',
         },
+        border: {
+          gray: '#959595',
+        },
       },
     },
   },
