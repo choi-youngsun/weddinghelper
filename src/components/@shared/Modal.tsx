@@ -13,8 +13,10 @@ export default function Modal({ children, isOpen, onClose }: ModalProps) {
   // 모달 외부 스크롤 막기 + 스크롤바 너비만큼 여백 추가
   useEffect(() => {
     if (isOpen) {
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '-10px'; // 스크롤바 너비만큼 패딩 추가
+      document.body.style.paddingRight = `${scrollbarWidth}px`; // 스크롤바 너비만큼 패딩 추가
     } else {
       document.body.style.overflow = '';
       document.body.style.paddingRight = ''; // 패딩 초기화
@@ -38,23 +40,29 @@ export default function Modal({ children, isOpen, onClose }: ModalProps) {
     setIsDragging(false);
   };
 
-  return (
-    isOpen &&
-    ReactDOM.createPortal(
+  return ReactDOM.createPortal(
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      role="dialog"
+      aria-modal="true"
+    >
       <div
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        role="document"
+        className="relative h-fit min-h-[200px] w-fit min-w-[200px] rounded-[16px] bg-white px-[10px] py-[15px]"
       >
-        <div className="relative h-fit min-h-[200px] w-fit min-w-[200px] rounded-[16px] bg-white px-[10px] py-[15px]">
-          <button className="absolute right-3 top-1" onClick={onClose}>
-            X
-          </button>
-          {children}
-        </div>
-      </div>,
-      document.body
-    )
+        <button
+          aria-label="Close"
+          className="absolute right-3 top-1"
+          onClick={onClose}
+        >
+          X
+        </button>
+        {children}
+      </div>
+    </div>,
+    document.body
   );
 }
