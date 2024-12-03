@@ -52,7 +52,6 @@ export default function Test() {
       <Input placeholder="이름을 입력해주세요" />
       <Input
         placeholder="이름을 입력해주세요"
-        isError
         errorMessage="이름은 필수 항목입니다!"
       />
     </main>
