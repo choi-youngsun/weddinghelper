@@ -39,6 +39,7 @@ export default {
         pressed: {
           yellow: '#F6CC36',
           pink: '#FF8C8C',
+          blue: '#9AA7FF',
         },
       },
     },
