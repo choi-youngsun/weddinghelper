@@ -7,6 +7,16 @@ type ModalProps = {
   children: React.ReactNode;
 };
 
+/**
+ * `Modal` 컴포넌트는 오버레이와 함께 표시되는 모달 창을 렌더링합니다.
+ *
+ * @param {ModalProps} props - 모달에 전달되는 속성
+ * @param {boolean} props.isOpen - 모달의 열림 상태를 나타냅니다.
+ * @param {() => void} props.onClose - 모달을 닫는 함수입니다.
+ * @param {React.ReactNode} props.children - 모달 내용으로 렌더링할 자식 컴포넌트입니다.
+ *
+ * @returns {JSX.Element | null} - 열려 있을 경우 모달 요소를 반환하고, 그렇지 않으면 `null`을 반환합니다.
+ */
 export default function Modal({ children, isOpen, onClose }: ModalProps) {
   const [isDragging, setIsDragging] = useState(false);
 
