@@ -1,7 +1,11 @@
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
+import Modal from '@/components/@shared/Modal';
+import { useModal } from '@/hooks/useModal';
 
 export default function Test() {
+  const { isOpen, onClose, onOpen } = useModal();
+
   return (
     <main className="grid grid-cols-3 items-center gap-4 bg-[#ededed] p-5">
       <Button>버튼!!!!</Button>
@@ -54,6 +58,10 @@ export default function Test() {
         placeholder="이름을 입력해주세요"
         errorMessage="이름은 필수 항목입니다!"
       />
+      <button onClick={onOpen}>모달열기!</button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        모달 내부
+      </Modal>
     </main>
   );
 }
