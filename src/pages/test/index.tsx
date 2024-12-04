@@ -7,7 +7,7 @@ export default function Test() {
   const { isOpen, onClose, onOpen } = useModal();
 
   return (
-    <main className="grid grid-cols-3 items-center gap-4 bg-[#ededed] p-5">
+    <main className="grid grid-cols-3 items-center gap-4 p-5">
       <Button>버튼!!!!</Button>
       <Button buttonColor="blue">버튼!!!!</Button>
       <Button buttonColor="pink">버튼!!!!</Button>
