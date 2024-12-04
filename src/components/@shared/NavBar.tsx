@@ -13,6 +13,7 @@ export default function NavBar() {
         />
       </Link>
       <button className="hover:scale-105 active:brightness-95">
+        //메뉴 기능 추가 예정
         <Image
           width={70}
           height={40}
