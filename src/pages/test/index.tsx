@@ -43,7 +43,7 @@ export default function Test() {
         buttonWidth="fitToChildren"
         buttonHeight={40}
         textColor="white"
-        textWeight="bold"
+        textSize="16_bold"
         className="px-4"
       >
         신부측
