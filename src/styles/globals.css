@@ -4,4 +4,19 @@
 
 body {
   background-color: #fff8d1;
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  width: 5px; /* 스크롤바 너비 */
+  height: 5px; /* 수평 스크롤바 높이 */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #bababa; /* 스크롤바 색상 */
+  border-radius: 10px; /* 둥글게 만들기 */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent; /* 스크롤바 트랙 색상 */
 }

@@ -1,10 +1,21 @@
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
+import SelectBox from '@/components/@shared/SelectBox';
 import { useModal } from '@/hooks/useModal';
 
 export default function Test() {
   const { isOpen, onClose, onOpen } = useModal();
+
+  const selectBoxOptions = [
+    { label: '대학교', value: '대학교' },
+    { label: '가족', value: '가족' },
+    { label: '교회', value: '교회' },
+    { label: '중/고등학교', value: '중/고등학교' },
+    { label: '동호회', value: '동호회' },
+    { label: '직장', value: '직장' },
+    { label: '기타', value: '기타' },
+  ];
 
   return (
     <main className="grid grid-cols-3 items-center gap-4 p-5">
@@ -62,6 +73,7 @@ export default function Test() {
       <Modal isOpen={isOpen} onClose={onClose}>
         모달 내부
       </Modal>
+      <SelectBox options={selectBoxOptions} />
     </main>
   );
 }
