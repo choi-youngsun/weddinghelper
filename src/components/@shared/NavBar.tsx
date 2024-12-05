@@ -2,9 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Dropdown, DropdownOption } from './Dropdown';
 import { useDropdown } from '@/hooks/useDropdown';
+import { useRouter } from 'next/router';
 
 export default function NavBar() {
   const { isOpen, onClose, onSwitch } = useDropdown();
+  const router = useRouter();
 
   const MenuButton = (
     <button className="hover:scale-105 active:brightness-95">
@@ -18,12 +20,18 @@ export default function NavBar() {
   );
 
   const handleOptionClick = (option: DropdownOption) => {
-    console.log(option.value, '클릭!');
+    if (option.value === 'logout') {
+      console.log('로그아웃 기능 추가 예정!');
+    } else if (option.value === 'admin') {
+      router.push('/admin');
+    } else {
+      router.push('/admin/setting');
+    }
   };
 
   const navOptions = [
     { label: '로그아웃', value: 'logout' },
-    { label: '메인 화면', value: 'main' },
+    { label: '관리자 페이지', value: 'admin' },
     { label: '정보 수정', value: 'setting' },
   ];
 
@@ -44,7 +52,7 @@ export default function NavBar() {
         isOpen={isOpen}
         onClose={onClose}
         onSwitch={onSwitch}
-        width={150}
+        width={200}
       />
     </nav>
   );
