@@ -2,9 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Dropdown, DropdownOption } from './Dropdown';
 import { useDropdown } from '@/hooks/useDropdown';
+import { useRouter } from 'next/router';
 
 export default function NavBar() {
   const { isOpen, onClose, onSwitch } = useDropdown();
+  const router = useRouter();
 
   const MenuButton = (
     <button className="hover:scale-105 active:brightness-95">
@@ -18,34 +20,42 @@ export default function NavBar() {
   );
 
   const handleOptionClick = (option: DropdownOption) => {
-    console.log(option.value, '클릭!');
+    if (option.value === 'logout') {
+      console.log('로그아웃 기능 추가 예정!');
+    } else if (option.value === 'admin') {
+      router.push('/admin');
+    } else {
+      router.push('/admin/setting');
+    }
   };
 
   const navOptions = [
     { label: '로그아웃', value: 'logout' },
-    { label: '메인 화면', value: 'main' },
+    { label: '관리자 페이지', value: 'admin' },
     { label: '정보 수정', value: 'setting' },
   ];
 
   return (
-    <nav className="fixed top-0 z-10 flex h-[60px] w-full items-center justify-between bg-[#ffffff9b] px-4">
-      <Link href={'/'}>
-        <Image
-          width={150}
-          height={32}
-          src="/icons/logo_small.png"
-          alt="내브바 작은 사이즈 로고"
+    <nav className="fixed left-0 top-0 z-10 w-full bg-[#ffffff9b] px-4">
+      <div className="mx-auto my-auto flex h-[60px] items-center justify-between xl:w-[1280px]">
+        <Link href={'/'}>
+          <Image
+            width={150}
+            height={32}
+            src="/icons/logo_small.png"
+            alt="내브바 작은 사이즈 로고"
+          />
+        </Link>
+        <Dropdown
+          triggerIcon={MenuButton}
+          options={navOptions}
+          onOptionClick={handleOptionClick}
+          isOpen={isOpen}
+          onClose={onClose}
+          onSwitch={onSwitch}
+          width={200}
         />
-      </Link>
-      <Dropdown
-        triggerIcon={MenuButton}
-        options={navOptions}
-        onOptionClick={handleOptionClick}
-        isOpen={isOpen}
-        onClose={onClose}
-        onSwitch={onSwitch}
-        width={150}
-      />
+      </div>
     </nav>
   );
 }

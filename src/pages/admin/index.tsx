@@ -1,23 +1,23 @@
 import Button from '@/components/@shared/Button';
 import Link from 'next/link';
 
-export default function Home() {
+export default function AdminPage() {
   return (
     <main>
       <div className="mx-auto mt-[300px] flex w-[200px] flex-col items-center justify-center gap-[20px]">
-        <Link href={'/admin'} className="w-full">
+        <Link href={'/admin/setting'} className="w-full">
           <Button buttonColor="white" borderColor="shadow">
-            관리자
+            정보 수정
           </Button>
         </Link>
-        <Link href={'/guest/bride'} className="w-full">
+        <Link href={'/admin/bride'} className="w-full">
           <Button buttonColor="white" borderColor="shadow">
-            신부측 하객
+            신부측 방명록 관리
           </Button>
         </Link>
-        <Link href={'/guest/broom'} className="w-full">
+        <Link href={'/admin/broom'} className="w-full">
           <Button buttonColor="white" borderColor="shadow">
-            신랑측 하객
+            신랑측 방명록 관리
           </Button>
         </Link>
       </div>
