@@ -1,5 +1,12 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
+/**
+ * 드롭다운 옵션 타입
+ *
+ * @typedef {Object} DropdownOption
+ * @property {string} label - 옵션의 표시 텍스트
+ * @property {string} value - 옵션의 고유 값
+ */
 export type DropdownOption = {
   label: string;
   value: string;
@@ -15,6 +22,23 @@ type DropdownProps = {
   onOptionClick: (option: DropdownOption) => void;
 };
 
+/**
+ * Dropdown 컴포넌트
+ *
+ * 사용자에게 옵션 리스트를 표시하고, 옵션 선택 시 콜백을 호출합니다.
+ * 외부 클릭 감지와 스크롤 가능한 드롭다운 메뉴를 지원합니다.
+ *
+ * @param {DropdownProps} props - Dropdown 컴포넌트의 속성
+ * @param {ReactNode} props.triggerIcon - 드롭다운을 열고 닫는 트리거 요소
+ * @param {DropdownOption[]} props.options - 드롭다운에서 선택 가능한 옵션 배열
+ * @param {number} [props.width] - 드롭다운의 너비 (기본값: 100%)
+ * @param {boolean} props.isOpen - 드롭다운 열림 상태
+ * @param {() => void} props.onClose - 드롭다운을 닫는 콜백 함수
+ * @param {() => void} props.onSwitch - 드롭다운 상태를 토글하는 콜백 함수
+ * @param {(option: DropdownOption) => void} props.onOptionClick - 옵션 클릭 시 호출되는 콜백 함수
+ *
+ * @returns {JSX.Element} Dropdown 컴포넌트 JSX 요소
+ */
 export function Dropdown({
   options,
   triggerIcon,
