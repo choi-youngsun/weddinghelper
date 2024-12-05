@@ -36,24 +36,26 @@ export default function NavBar() {
   ];
 
   return (
-    <nav className="fixed top-0 z-10 flex h-[60px] w-full items-center justify-between bg-[#ffffff9b] px-4">
-      <Link href={'/'}>
-        <Image
-          width={150}
-          height={32}
-          src="/icons/logo_small.png"
-          alt="내브바 작은 사이즈 로고"
+    <nav className="fixed left-0 top-0 z-10 w-full bg-[#ffffff9b] px-4">
+      <div className="mx-auto my-auto flex h-[60px] items-center justify-between xl:w-[1280px]">
+        <Link href={'/'}>
+          <Image
+            width={150}
+            height={32}
+            src="/icons/logo_small.png"
+            alt="내브바 작은 사이즈 로고"
+          />
+        </Link>
+        <Dropdown
+          triggerIcon={MenuButton}
+          options={navOptions}
+          onOptionClick={handleOptionClick}
+          isOpen={isOpen}
+          onClose={onClose}
+          onSwitch={onSwitch}
+          width={200}
         />
-      </Link>
-      <Dropdown
-        triggerIcon={MenuButton}
-        options={navOptions}
-        onOptionClick={handleOptionClick}
-        isOpen={isOpen}
-        onClose={onClose}
-        onSwitch={onSwitch}
-        width={200}
-      />
+      </div>
     </nav>
   );
 }
