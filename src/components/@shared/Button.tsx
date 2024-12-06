@@ -5,7 +5,7 @@ type ButtonProps = {
   buttonWidth?: 'fitToChildren' | 'fitToParent';
   buttonColor?: 'yellow' | 'red' | 'pink' | 'blue' | 'green' | 'white';
   textColor?: 'white' | 'black';
-  textSize?: '16' | '20' | '24';
+  textSize?: '16' | '20' | '24' | '16_bold' | '20_bold';
   textWeight?: 'regular' | 'bold';
   borderColor?: 'yellow' | 'gray' | 'none' | 'shadow';
   buttonHeight?: number;
@@ -26,7 +26,7 @@ type ButtonProps = {
  *        - `fitToParent`: 부모 요소의 너비를 채웁니다.
  * @param {'yellow' | 'red' | 'pink' | 'blue' | 'green' | 'white'} [props.buttonColor='yellow'] - 버튼의 배경색을 정의합니다.
  * @param {'white' | 'black'} [props.textColor='black'] - 버튼 텍스트의 색상을 정의합니다.
- * @param {'16' | '20' | '24'} [props.textSize='16'] - 텍스트의 크기를 정의합니다.
+ * @param {'16' | '20' | '24' | '16_bold' | '20_bold'} [props.textSize='16'] - 텍스트의 크기를 정의합니다.
  *        - `16`: 작은 크기의 텍스트입니다.
  *        - `20`: 중간 크기의 텍스트입니다.
  *        - `24`: 큰 크기의 텍스트입니다.
@@ -49,7 +49,6 @@ export default function Button({
   buttonColor = 'yellow',
   textColor = 'black',
   textSize = '16',
-  textWeight = 'regular',
   borderColor = 'none',
   className,
   style,
@@ -60,11 +59,11 @@ export default function Button({
   const buttonClass = clsx(
     'base-class',
     {
-      'bg-button-yellow active:bg-pressed-yellow hover:scale-105':
+      'bg-button-yellow hover:scale-105 active:bg-pressed-yellow':
         !disabled && buttonColor === 'yellow',
-      'bg-button-pink active:bg-pressed-pink hover:scale-105':
+      'bg-button-pink hover:scale-105 active:bg-pressed-pink':
         !disabled && buttonColor === 'pink',
-      'bg-button-blue active:bg-pressed-blue hover:scale-105':
+      'bg-button-blue hover:scale-105 active:bg-pressed-blue':
         !disabled && buttonColor === 'blue',
       'bg-button-red hover:scale-105 active:brightness-95':
         !disabled && buttonColor === 'red',
@@ -73,7 +72,7 @@ export default function Button({
       'bg-text-white hover:scale-105 active:brightness-95':
         !disabled && buttonColor === 'white',
       'border-button-yellow': borderColor === 'yellow',
-      'border-text-gray border-[1px]': borderColor === 'gray',
+      'border-[1px] border-text-gray': borderColor === 'gray',
       'shadow-right-bottom': borderColor === 'shadow',
       'rounded-[12px]': buttonStyle === 'square',
       'rounded-[20px]': buttonStyle === 'round',
@@ -83,8 +82,8 @@ export default function Button({
       'text-sm-regular': textSize === '16',
       'text-md-regular': textSize === '20',
       'text-lg-regular': textSize === '24',
-      'text-sm-extraBold': textSize === '16' && textWeight === 'bold',
-      'text-md-extraBold': textSize === '20' && textWeight === 'bold',
+      'text-sm-extraBold': textSize === '16_bold',
+      'text-md-extraBold': textSize === '20_bold',
       'w-full': buttonWidth === 'fitToParent',
       'w-fit': buttonWidth === 'fitToChildren',
     },
