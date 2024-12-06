@@ -2,8 +2,34 @@ import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Login() {
+  // API연결 이후 유효성 검사 추가 예정
+  // 필드 상태를 객체로 관리
+  const [formFields, setFormFields] = useState({
+    email: '',
+    password: '',
+  });
+
+  // 입력값 변경 핸들러
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormFields((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    console.log(formFields);
+    setFormFields({
+      email: '',
+      password: '',
+    });
+  };
+
+  const isAllInputFilled = () => {
+    return Object.values(formFields).every((value) => value.trim() !== '');
+  };
+
   return (
     <div className="mx-auto mb-[50px] mt-[150px] flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
       <div className="mx-auto mb-[30px] w-[250px] md:w-[400px]">
@@ -15,10 +41,13 @@ export default function Login() {
         />
       </div>
       <div>
-        <p className="text-md-regular">아이디</p>
+        <p className="text-md-regular">이메일</p>
         <Input
-          placeholder="아이디를 입력해주세요."
+          placeholder="이메일을 입력해주세요."
           className="mt-[10px] text-md-regular"
+          name="email"
+          value={formFields.email}
+          onChange={handleChange}
         />
       </div>
       <div>
@@ -26,6 +55,10 @@ export default function Login() {
         <Input
           placeholder="비밀번호를 입력해주세요."
           className="mt-[10px] text-md-regular"
+          type="password"
+          name="password"
+          value={formFields.password}
+          onChange={handleChange}
         />
       </div>
       <Button
@@ -33,6 +66,8 @@ export default function Login() {
         textSize="20_bold"
         buttonHeight={60}
         className="mt-[30px]"
+        onClick={handleSubmit}
+        disabled={!isAllInputFilled()}
       >
         로그인하기
       </Button>
