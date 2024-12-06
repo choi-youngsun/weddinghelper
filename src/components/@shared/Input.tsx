@@ -5,7 +5,7 @@ type InputProps = {
   textSize?: '16' | '20' | '24';
   height?: number;
   placeholder?: string;
-  errorMessage?: string;
+  errorMessage?: string | null;
   className?: string;
 } & React.ComponentPropsWithoutRef<'input'>;
 
@@ -37,8 +37,8 @@ export default function Input({
   const inputClass = clsx(
     'rounded-[16px] px-3',
     {
-      'border-border-gray border': border === 'default',
-      'border-button-red border': errorMessage !== '',
+      'border border-border-gray': border === 'default',
+      'border border-button-red': errorMessage !== '',
       'text-[16px]': textSize === '16',
       'text-[20px]': textSize === '20',
       'text-[24px]': textSize === '24',
@@ -60,7 +60,7 @@ export default function Input({
         {...inputAttributes}
       />
       {errorMessage && (
-        <p className="text-button-red ml-2 mt-1">{errorMessage}</p>
+        <p className="ml-2 mt-1 text-button-red">{errorMessage}</p>
       )}
     </div>
   );
