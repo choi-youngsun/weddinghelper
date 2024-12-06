@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function SignUp() {
+  // API연결 이후 유효성 검사 추가 예정
   const {
     errors,
     clearError,
@@ -27,10 +28,45 @@ export default function SignUp() {
     const { name, value } = e.target;
     setFormFields((prev) => ({ ...prev, [name]: value }));
 
-    // 입력 중 에러 제거 (기존 에러가 있는 경우)
-    if (errors[name]?.isError) {
-      clearError(name);
+    // 입력값에 따라 에러를 업데이트
+    switch (name) {
+      case 'name':
+        if (value.trim().length > 0) {
+          clearError(name); // 입력값이 유효할 때만 에러를 제거
+        }
+        break;
+      case 'email':
+        validateEmail(name, value); // 유효하지 않은 경우 에러 설정
+        break;
+      case 'password':
+        validatePassword(name, value);
+        break;
+      case 'confirmPassword':
+        passwordConfirmation(name, value, formFields.password);
+        break;
+      default:
+        break;
     }
+  };
+
+  const handleSubmit = () => {
+    console.log(formFields);
+    setFormFields({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
+  };
+
+  const isAllInputFilled = () => {
+    const areFieldsFilled = Object.values(formFields).every(
+      (value) => value.trim() !== ''
+    );
+
+    const hasNoErrors = Object.values(errors).every((error) => !error.isError);
+
+    return areFieldsFilled && hasNoErrors;
   };
 
   return (
@@ -97,6 +133,8 @@ export default function SignUp() {
         textSize="20_bold"
         buttonHeight={60}
         className="mt-[30px]"
+        onClick={handleSubmit}
+        disabled={!isAllInputFilled()}
       >
         회원가입하기
       </Button>
