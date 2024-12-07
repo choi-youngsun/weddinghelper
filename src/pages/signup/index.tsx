@@ -70,8 +70,8 @@ export default function SignUp() {
   };
 
   return (
-    <div className="mx-auto mb-[50px] mt-[100px] flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
-      <p className="text-center text-lg-regular">회원가입</p>
+    <div className="mx-auto mb-[50px] flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
+      <p className="mt-[100px] text-center text-lg-regular">회원가입</p>
       <div>
         <p className="text-md-regular">이름</p>
         <Input
