@@ -1,6 +1,7 @@
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
+import RadioButton from '@/components/@shared/RadioButton';
 import SelectBox from '@/components/@shared/SelectBox';
 import { useModal } from '@/hooks/useModal';
 
@@ -17,11 +18,24 @@ export default function Test() {
     { label: '기타', value: '기타' },
   ];
 
+  const radioOptions = [
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '3', value: '3' },
+    { label: '4', value: '4' },
+    { label: '5', value: '5' },
+    { label: '그이상', value: null },
+  ];
+
   return (
     <main className="grid grid-cols-3 items-center gap-4 p-5">
-      <Button>버튼!!!!</Button>
-      <Button buttonColor="blue">버튼!!!!</Button>
-      <Button buttonColor="pink">버튼!!!!</Button>
+      <Button className="mt-[60px]">버튼!!!!</Button>
+      <Button className="mt-[60px]" buttonColor="blue">
+        버튼!!!!
+      </Button>
+      <Button className="mt-[60px]" buttonColor="pink">
+        버튼!!!!
+      </Button>
       <Button buttonColor="green">버튼!!!!</Button>
       <Button buttonColor="red" textColor="white" textWeight="bold" disabled>
         버튼!!!!
@@ -74,6 +88,12 @@ export default function Test() {
         모달 내부
       </Modal>
       <SelectBox options={selectBoxOptions} />
+      <RadioButton
+        options={radioOptions}
+        className="grid grid-cols-2 gap-10 text-2xl"
+        buttonSize={50}
+        gap={20}
+      />
     </main>
   );
 }
