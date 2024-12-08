@@ -11,6 +11,23 @@ type RadioButtonProps = {
   selectedOption: string | null;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+/**
+ * RadioButton 컴포넌트
+ *
+ * 주어진 옵션 목록에서 하나를 선택할 수 있는 라디오 버튼 그룹을 렌더링합니다.
+ * 각 버튼은 원 형태로, 선택된 옵션은 내부에 작은 원으로 표시됩니다.
+ *
+ * @param {RadioButtonProps} props - RadioButton 컴포넌트의 속성
+ * @param {RadioOption[]} props.options - 라디오 버튼에 표시할 옵션 목록
+ * @param {number} [props.buttonSize=30] - 라디오 버튼의 크기 (기본값: 30px)
+ * @param {number} [props.gap=10] - 라디오 버튼 사이의 간격 (기본값: 10px)
+ * @param {string | null} props.selectedOption - 현재 선택된 옵션의 값
+ * @param {(value: string) => void} props.handleSelect - 선택된 옵션의 값을 부모 컴포넌트로 전달하는 콜백 함수
+ * @param {string} [props.className] - 추가적인 CSS 클래스 이름
+ * @param {React.HTMLAttributes<HTMLDivElement>} [props.rest] - 다른 HTML 속성들
+ *
+ * @returns {JSX.Element} 라디오 버튼 그룹 JSX 요소
+ */
 export default function RadioButton({
   options,
   buttonSize = 30,
