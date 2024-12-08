@@ -89,7 +89,6 @@ export default function Test() {
       <Modal isOpen={isOpen} onClose={onClose}>
         모달 내부
       </Modal>
-      <SelectBox options={selectBoxOptions} />
       <RadioButton
         options={radioOptions}
         selectedOption={selectedOption}
