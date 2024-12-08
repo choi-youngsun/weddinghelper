@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Dropdown, DropdownOption } from './Dropdown';
 import { useDropdown } from '@/hooks/useDropdown';
 import Image from 'next/image';
@@ -7,6 +6,8 @@ type SelectBoxProps = {
   options: DropdownOption[];
   width?: number;
   height?: number;
+  selectedOption: DropdownOption | null;
+  handleSelect: (selectedValue: DropdownOption) => void; // 부모로 값을 전달하기 위한 콜백
 } & React.HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -24,10 +25,11 @@ export default function SelectBox({
   options,
   width,
   height = 55,
+  handleSelect,
+  selectedOption,
   className,
   ...rest
 }: SelectBoxProps) {
-  const [selectedOption, setSelectedOption] = useState('소속 선택');
   const { isOpen, onClose, onSwitch } = useDropdown();
 
   const SelectBoxTrigger = (
@@ -35,7 +37,7 @@ export default function SelectBox({
       className="flex cursor-pointer items-center justify-between rounded-[16px] border border-border-gray bg-white px-3 py-[5px]"
       style={{ width: `${width}px` || '100%', height: `${height}px` }}
     >
-      <p>{selectedOption}</p>
+      <p>{selectedOption?.label || '선택하기'}</p>
       <div className="w-[18px]">
         <Image
           src={isOpen ? '/icons/triangle_up.png' : '/icons/triangle_down.png'}
@@ -47,13 +49,9 @@ export default function SelectBox({
     </div>
   );
 
-  const handleSelectClick = (option: DropdownOption) => {
-    setSelectedOption(option.label);
-  };
-
   return (
     <Dropdown
-      onOptionClick={handleSelectClick}
+      onOptionClick={handleSelect}
       options={options}
       triggerIcon={SelectBoxTrigger}
       width={width}

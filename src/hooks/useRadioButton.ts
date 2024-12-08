@@ -9,6 +9,7 @@ export const useRadioButton = () => {
 
   return {
     selectedOption,
+    setSelectedOption,
     handleSelect,
   };
 };
