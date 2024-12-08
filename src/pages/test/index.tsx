@@ -4,9 +4,11 @@ import Modal from '@/components/@shared/Modal';
 import RadioButton from '@/components/@shared/RadioButton';
 import SelectBox from '@/components/@shared/SelectBox';
 import { useModal } from '@/hooks/useModal';
+import { useRadioButton } from '@/hooks/useRadioButton';
 
 export default function Test() {
   const { isOpen, onClose, onOpen } = useModal();
+  const { selectedOption, handleSelect } = useRadioButton();
 
   const selectBoxOptions = [
     { label: '대학교', value: '대학교' },
@@ -24,7 +26,7 @@ export default function Test() {
     { label: '3', value: '3' },
     { label: '4', value: '4' },
     { label: '5', value: '5' },
-    { label: '그이상', value: null },
+    { label: '그이상', value: '' },
   ];
 
   return (
@@ -90,6 +92,8 @@ export default function Test() {
       <SelectBox options={selectBoxOptions} />
       <RadioButton
         options={radioOptions}
+        selectedOption={selectedOption}
+        handleSelect={handleSelect}
         className="grid grid-cols-2 gap-10 text-2xl"
         buttonSize={50}
         gap={20}
