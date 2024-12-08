@@ -95,9 +95,8 @@ export function Dropdown({
         >
           <div className="max-h-[200px] overflow-y-auto">
             {options.map((option, index) => (
-              <div className="w-full">
+              <div className="w-full" key={option.value}>
                 <div
-                  key={option.value}
                   className="h-[40px] w-full cursor-pointer rounded-[12px] bg-[#ffffff] px-2 py-1 hover:bg-[#e4e4e4]"
                   onClick={() => {
                     onOptionClick(option);
