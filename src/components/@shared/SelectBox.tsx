@@ -6,7 +6,8 @@ import Image from 'next/image';
 type SelectBoxProps = {
   options: DropdownOption[];
   width?: number;
-};
+  height?: number;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * SelectBox 컴포넌트
@@ -19,14 +20,20 @@ type SelectBoxProps = {
  *
  * @returns {JSX.Element} SelectBox 컴포넌트 JSX 요소
  */
-export default function SelectBox({ options, width }: SelectBoxProps) {
+export default function SelectBox({
+  options,
+  width,
+  height = 55,
+  className,
+  ...rest
+}: SelectBoxProps) {
   const [selectedOption, setSelectedOption] = useState('소속 선택');
   const { isOpen, onClose, onSwitch } = useDropdown();
 
   const SelectBoxTrigger = (
     <div
-      className="border-border-gray flex h-[40px] cursor-pointer items-center justify-between rounded-[16px] border bg-white px-3 py-[5px]"
-      style={{ width: `${width || 100}%` }}
+      className="flex cursor-pointer items-center justify-between rounded-[16px] border border-border-gray bg-white px-3 py-[5px]"
+      style={{ width: `${width}px` || '100%', height: `${height}px` }}
     >
       <p>{selectedOption}</p>
       <div className="w-[18px]">
@@ -53,6 +60,8 @@ export default function SelectBox({ options, width }: SelectBoxProps) {
       isOpen={isOpen}
       onClose={onClose}
       onSwitch={onSwitch}
+      className={className}
+      {...rest}
     />
   );
 }
