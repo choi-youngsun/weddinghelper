@@ -31,8 +31,8 @@ export default function Login() {
   };
 
   return (
-    <div className="mx-auto mb-[50px] mt-[150px] flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
-      <div className="mx-auto mb-[30px] w-[250px] md:w-[400px]">
+    <div className="mx-auto mb-[50px] flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
+      <div className="mx-auto mb-[30px] mt-[150px]  w-[250px] md:w-[400px]">
         <Image
           src="/icons/logo_large.png"
           alt="메인 로고 아이콘"
