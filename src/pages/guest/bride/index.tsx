@@ -44,6 +44,7 @@ export default function GuestBridePage() {
 
   const handleSubmit = () => {
     console.log({
+      구분: '신부측',
       이름: nameValue,
       소속: selectedGroupOption,
       식권: selectedOption,
@@ -98,6 +99,7 @@ export default function GuestBridePage() {
           textSize="20"
           buttonHeight={60}
           disabled={!isAllInputFilled()}
+          className="mt-[30px]"
         >
           제출
         </Button>
