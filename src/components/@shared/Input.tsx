@@ -35,7 +35,7 @@ export default function Input({
   ...inputAttributes
 }: InputProps) {
   const inputClass = clsx(
-    'rounded-[16px] px-3',
+    'w-full rounded-[16px] px-3',
     {
       'border border-border-gray': border === 'default',
       'border border-button-red': errorMessage !== '',
@@ -52,7 +52,7 @@ export default function Input({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <input
         className={inputClass}
         style={customStyle}
