@@ -1,36 +1,39 @@
-import Button from '@/components/@shared/Button';
-import Input from '@/components/@shared/Input';
-import RadioButton from '@/components/@shared/RadioButton';
-import SelectBox from '@/components/@shared/SelectBox';
+import GuestForm from '@/components/guest/GuestForm';
+import { useModal } from '@/hooks/useModal';
 import { useRadioButton } from '@/hooks/useRadioButton';
 import { useSelectBox } from '@/hooks/useSelectBox';
 import { useState } from 'react';
 
 export default function GuestBroomPage() {
-  const { selectedOption, setSelectedOption, handleSelect } = useRadioButton();
+  const {
+    selectedOption: selectedTicketOption,
+    setSelectedOption: setSelectedTicketOption,
+    handleSelect: handleTicketSelect,
+  } = useRadioButton();
   const {
     selectedOption: selectedGroupOption,
     setSelectedOption: setSelectedGroupOption,
     handleSelect: handleGroupSelect,
   } = useSelectBox();
+  const { isOpen, onClose, onOpen } = useModal();
 
-  const groupOptions = [
-    { label: '대학교', value: '대학교' },
+  const handleOpenModal = () => {
+    onOpen();
+
+    // 3초 뒤에 모달 닫기
+    setTimeout(() => {
+      onClose();
+    }, 3000);
+  };
+
+  const broomGroupOptions = [
     { label: '가족', value: '가족' },
+    { label: '대학교', value: '대학교' },
     { label: '교회', value: '교회' },
     { label: '중/고등학교', value: '중/고등학교' },
-    { label: '동호회', value: '동호회' },
+    { label: '커스트', value: '커스트' },
     { label: '직장', value: '직장' },
     { label: '기타', value: '기타' },
-  ];
-
-  const radioOption = [
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4', value: '4' },
-    { label: '5', value: '5' },
-    { label: '그이상', value: '' },
   ];
 
   const [nameValue, setNameValue] = useState('');
@@ -46,63 +49,27 @@ export default function GuestBroomPage() {
       구분: '신랑측',
       이름: nameValue,
       소속: selectedGroupOption,
-      식권: selectedOption,
+      식권: selectedTicketOption,
     });
     setNameValue('');
     setSelectedGroupOption(null);
-    setSelectedOption(null);
-  };
-
-  const isAllInputFilled = () => {
-    return (
-      nameValue !== '' &&
-      selectedGroupOption !== null &&
-      selectedOption !== null
-    );
+    setSelectedTicketOption(null);
+    handleOpenModal();
   };
 
   return (
-    <div className="mx-auto mb-[50px] md:w-[500px]">
-      <form className="flex w-full flex-col gap-[30px] px-[30px]">
-        <p className="mt-[150px] text-center text-xl-regular">신랑측</p>
-        <div>
-          <p className="mb-[20px] text-md-regular">이름</p>
-          <Input
-            placeholder="이름을 입력하세요."
-            name="name"
-            value={nameValue}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          <p className="mb-[20px] text-md-regular">소속</p>
-          <SelectBox
-            options={groupOptions}
-            className="text-md-regular"
-            selectedOption={selectedGroupOption}
-            handleSelect={handleGroupSelect}
-          />
-        </div>
-        <div>
-          <p className="mb-[20px] text-md-regular">식권</p>
-          <RadioButton
-            options={radioOption}
-            selectedOption={selectedOption}
-            handleSelect={handleSelect}
-            className="grid grid-cols-2 gap-10 text-xl"
-          />
-        </div>
-        <Button
-          onClick={handleSubmit}
-          buttonColor="blue"
-          textSize="20"
-          buttonHeight={60}
-          disabled={!isAllInputFilled()}
-          className="mt-[30px]"
-        >
-          제출
-        </Button>
-      </form>
-    </div>
+    <GuestForm
+      side="broom"
+      nameValue={nameValue}
+      onNameChange={handleNameChange}
+      groupOptions={broomGroupOptions}
+      selectedGroupOption={selectedGroupOption}
+      selectedTicketOption={selectedTicketOption}
+      handleGroupSelect={handleGroupSelect}
+      handleTicketSelect={handleTicketSelect}
+      onSubmit={handleSubmit}
+      isOpen={isOpen}
+      onClose={onClose}
+    />
   );
 }
