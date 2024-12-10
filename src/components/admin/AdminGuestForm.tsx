@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useModal } from '@/hooks/useModal';
 import Button from '../@shared/Button';
 import Input from '../@shared/Input';
+import ConfirmModal from './ConfirmModal';
 
 export type GuestInfo = {
   id: number;
@@ -31,6 +32,8 @@ export default function AdminGuestForm({
   onEditClick,
   onDeleteClick,
 }: BrideAdminFormProps) {
+  const { isOpen, onClose, onOpen } = useModal();
+
   return (
     <tr key={guest.orderNumber} className="text-center">
       <td className="border-r border-black px-2 py-1">{guest.orderNumber}</td>
@@ -118,10 +121,17 @@ export default function AdminGuestForm({
           buttonColor={side === 'bride' ? 'pink' : 'blue'}
           className="text-xs"
           buttonHeight={35}
-          onClick={() => onDeleteClick(guest.id)}
+          onClick={onOpen}
         >
           삭제
         </Button>
+        <ConfirmModal
+          guestId={guest.id}
+          guestName={guest.guestName}
+          isOpen={isOpen}
+          onClose={onClose}
+          onDelete={onDeleteClick}
+        />
       </td>
     </tr>
   );
