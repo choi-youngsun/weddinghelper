@@ -54,6 +54,7 @@ export default function NavBar() {
           onClose={onClose}
           onSwitch={onSwitch}
           width={200}
+          className="text-center"
         />
       </div>
     </nav>

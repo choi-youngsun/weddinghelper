@@ -5,6 +5,7 @@ type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  opacity?: number;
 };
 
 /**
@@ -17,7 +18,12 @@ type ModalProps = {
  *
  * @returns {JSX.Element | null} - 열려 있을 경우 모달 요소를 반환하고, 그렇지 않으면 `null`을 반환합니다.
  */
-export default function Modal({ children, isOpen, onClose }: ModalProps) {
+export default function Modal({
+  children,
+  isOpen,
+  onClose,
+  opacity = 1,
+}: ModalProps) {
   const [isDragging, setIsDragging] = useState(false);
 
   // 모달 외부 스크롤 막기 + 스크롤바 너비만큼 여백 추가
@@ -62,6 +68,7 @@ export default function Modal({ children, isOpen, onClose }: ModalProps) {
       <div
         role="document"
         className="relative h-fit min-h-[200px] w-fit min-w-[200px] rounded-[16px] bg-white px-[10px] py-[15px]"
+        style={{ opacity: `${opacity}` }}
       >
         <button
           aria-label="Close"
