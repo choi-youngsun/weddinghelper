@@ -1,34 +1,26 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
   },
   "extends": [
     "prettier",
     "next/core-web-vitals",
     "eslint:recommended",
-    "airbnb",
-    "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
   },
-  "plugins": [
-    "prettier",
-    "react",
-    "jsx-a11y",
-    "@typescript-eslint",
-    "import"
-  ],
+  "plugins": ["prettier", "react", "jsx-a11y", "@typescript-eslint", "import"],
   "rules": {
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
@@ -53,6 +45,17 @@
     "react/display-name": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
-    "prettier/prettier": "error"
-  }
+    "prettier/prettier": "error",
+
+    // 추가된 커스텀 규칙들 (Airbnb 스타일을 따르도록 설정)
+    "import/no-unresolved": "error", // 'import/no-unresolved' 규칙을 추가
+    "import/named": "error", // 'import/named' 규칙을 추가
+    "import/default": "error", // 'import/default' 규칙을 추가
+    "import/namespace": "error", // 'import/namespace' 규칙을 추가
+    "react/jsx-no-bind": "warn", // JSX에 불필요한 바인딩을 하지 않도록 경고
+    "react/jsx-closing-bracket-location": ["error", "line-aligned"], // JSX 태그의 닫는 괄호 위치 규칙
+    "react/jsx-curly-newline": "off", // JSX에서 중괄호의 줄 바꿈 규칙
+    "react/no-array-index-key": "error", // 배열 인덱스를 키로 사용하는 것을 방지
+    "react/no-children-prop": "error", // children prop 사용을 금지
+  },
 }
