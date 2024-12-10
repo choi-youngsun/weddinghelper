@@ -2,23 +2,12 @@ import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Modal from '@/components/@shared/Modal';
 import RadioButton from '@/components/@shared/RadioButton';
-import SelectBox from '@/components/@shared/SelectBox';
 import { useModal } from '@/hooks/useModal';
 import { useRadioButton } from '@/hooks/useRadioButton';
 
 export default function Test() {
   const { isOpen, onClose, onOpen } = useModal();
   const { selectedOption, handleSelect } = useRadioButton();
-
-  const selectBoxOptions = [
-    { label: '대학교', value: '대학교' },
-    { label: '가족', value: '가족' },
-    { label: '교회', value: '교회' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '동호회', value: '동호회' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
 
   const radioOptions = [
     { label: '1', value: '1' },
