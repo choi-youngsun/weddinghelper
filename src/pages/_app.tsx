@@ -43,16 +43,19 @@ export default function App({ Component, pageProps }: AppProps) {
           content="결혼식 방명록 정리를 쉽고 빠르게. 웨딩헬퍼와 함께해보세요"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://yourwebsite.com" />
+        <meta property="og:url" content="https://weddinghelper.vercel.app/" />
         <meta
           property="og:image"
-          content="https://yourwebsite.com/og-image.png"
+          content="https://weddinghelper.vercel.app/images/thumbnail.png"
         />
         <meta property="og:site_name" content="웨딩헬퍼" />
         <meta property="og:locale" content="ko_KR" />
 
         {/* Twitter 카드 메타태그 */}
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:card"
+          content="https://weddinghelper.vercel.app/images/thumbnail.png"
+        />
         <meta name="twitter:title" content="웨딩헬퍼" />
         <meta
           name="twitter:description"
@@ -60,13 +63,11 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta
           name="twitter:image"
-          content="https://yourwebsite.com/twitter-image.png"
+          content="https://weddinghelper.vercel.app/images/thumbnail.png"
         />
-        <meta name="twitter:site" content="@YourTwitterHandle" />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </Head>
       <main className={`${backgroundColor()} mx-auto min-h-screen w-full`}>
         <NavBar />
