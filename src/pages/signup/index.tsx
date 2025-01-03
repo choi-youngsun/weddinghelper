@@ -3,6 +3,8 @@ import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { postSignUp } from '@/api/auth/authAPI';
 
 export default function SignUp() {
   // API연결 이후 유효성 검사 추가 예정
@@ -49,8 +51,35 @@ export default function SignUp() {
     }
   };
 
+  // 팀 생성 Mutation
+  const { mutate: signup } = useMutation({
+    mutationFn: ({
+      name,
+      email,
+      password,
+      passwordCheck,
+    }: {
+      name: string;
+      email: string;
+      password: string;
+      passwordCheck: string;
+    }) => postSignUp(name, email, password, passwordCheck),
+    onSuccess: (data) => {
+      const name = data.user.name;
+      console.log(`${name} 유저의 회원가입 성공!`);
+    },
+    onError: (error) => {
+      console.error('회원가입 실패:', error);
+    },
+  });
+
   const handleSubmit = () => {
-    console.log(formFields);
+    signup({
+      name: formFields.name,
+      email: formFields.email,
+      password: formFields.password,
+      passwordCheck: formFields.confirmPassword,
+    });
     setFormFields({
       name: '',
       email: '',
