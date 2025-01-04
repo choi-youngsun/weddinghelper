@@ -6,6 +6,7 @@ export const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // 쿠키를 함께 전송
 });
 
 // Add a request interceptor
