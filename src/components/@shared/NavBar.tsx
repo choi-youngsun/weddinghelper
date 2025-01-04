@@ -52,7 +52,7 @@ export default function NavBar() {
   return (
     <nav className="fixed left-0 top-0 z-10 w-full bg-[#ffffff9b] px-4">
       <div className="mx-auto my-auto flex h-[60px] items-center justify-between xl:w-[1280px]">
-        <Link href={'/'}>
+        <Link href={'/home'}>
           <Image
             width={150}
             height={32}
