@@ -10,6 +10,8 @@ interface IGuest extends Document {
   giftAmount?: number; // 축의금 금액 (optional)
   ticketCount?: number; // 식권 수 (optional)
   note?: string; // 비고 (optional)
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const guestSchema = new mongoose.Schema(
