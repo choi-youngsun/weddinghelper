@@ -29,7 +29,7 @@ export default function Login() {
       postLogIn(email, password),
     onSuccess: (data) => {
       console.log('로그인 성공!');
-      router.push('/'); // 로그인 성공 시 홈으로 이동
+      router.push('/home'); // 로그인 성공 시 홈으로 이동
       localStorage.setItem('user', JSON.stringify(data.user)); // 유저 정보를 로컬 스토리지에 저장
     },
     onError: (error) => {

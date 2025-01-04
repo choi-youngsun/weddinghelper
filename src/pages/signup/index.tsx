@@ -58,7 +58,7 @@ export default function SignUp() {
       postLogIn(email, password),
     onSuccess: () => {
       console.log('로그인 성공!');
-      router.push('/'); // 로그인 성공 시 홈으로 이동
+      router.push('/home'); // 로그인 성공 시 홈으로 이동
     },
     onError: (error) => {
       console.error('로그인 실패:', error);
