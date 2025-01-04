@@ -74,15 +74,16 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${backgroundColor()} mx-auto min-h-screen w-full`}>
-        <NavBar />
-        <div>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          {' '}
+          <NavBar />
+          <div>
             <Component {...pageProps} />
             {process.env.NODE_ENV === 'development' && (
               <ReactQueryDevtools initialIsOpen={false} />
             )}
-          </QueryClientProvider>
-        </div>
+          </div>
+        </QueryClientProvider>
       </main>
     </>
   );
