@@ -19,7 +19,7 @@ const authenticate = (
       // JWT 토큰을 디코딩하여 사용자 정보를 추출
       const decoded = jwt.verify(
         token,
-        process.env.JWT_SECRET || 'your_secret_key'
+        process.env.JWT_ACCESS_SECRET || 'your_secret_key'
       );
 
       // 디코딩된 사용자 정보를 req.user에 저장
