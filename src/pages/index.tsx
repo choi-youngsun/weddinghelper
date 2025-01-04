@@ -1,4 +1,5 @@
 import Button from '@/components/@shared/Button';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function Home() {
@@ -20,11 +21,15 @@ export default function Home() {
 
   return (
     <div className="mx-auto flex w-[200px] flex-col items-center justify-center gap-[20px]">
-      <a href="/home" onClick={handleLinkClick} className="mt-[300px] w-full ">
+      <Link
+        href="/home"
+        onClick={handleLinkClick}
+        className="mt-[300px] w-full "
+      >
         <Button buttonColor="white" borderColor="shadow">
           시작하기
         </Button>
-      </a>
+      </Link>
     </div>
   );
 }
