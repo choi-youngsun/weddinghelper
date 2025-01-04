@@ -4,10 +4,12 @@ import Input from '@/components/@shared/Input';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { postSignUp } from '@/api/auth/authAPI';
+import { postLogIn, postSignUp } from '@/api/auth/authAPI';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
-  // API연결 이후 유효성 검사 추가 예정
+  const router = useRouter();
+
   const {
     errors,
     clearError,
@@ -51,7 +53,18 @@ export default function SignUp() {
     }
   };
 
-  // 팀 생성 Mutation
+  const { mutate: login } = useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      postLogIn(email, password),
+    onSuccess: () => {
+      console.log('로그인 성공!');
+      router.push('/'); // 로그인 성공 시 홈으로 이동
+    },
+    onError: (error) => {
+      console.error('로그인 실패:', error);
+    },
+  });
+
   const { mutate: signup } = useMutation({
     mutationFn: ({
       name,
@@ -67,6 +80,13 @@ export default function SignUp() {
     onSuccess: (data) => {
       const name = data.user.name;
       console.log(`${name} 유저의 회원가입 성공!`);
+      login({ email: formFields.email, password: formFields.password });
+      setFormFields({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
     },
     onError: (error) => {
       console.error('회원가입 실패:', error);
@@ -79,12 +99,6 @@ export default function SignUp() {
       email: formFields.email,
       password: formFields.password,
       passwordCheck: formFields.confirmPassword,
-    });
-    setFormFields({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
     });
   };
 
