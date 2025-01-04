@@ -1,29 +1,50 @@
+import { postLogIn } from '@/api/auth/authAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export default function Login() {
-  // API연결 이후 유효성 검사 추가 예정
-  // 필드 상태를 객체로 관리
+  const router = useRouter();
+
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
   });
 
+  const [error, setError] = useState('');
+
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormFields((prev) => ({ ...prev, [name]: value }));
+    setError(''); // 입력값이 변경될 때마다 에러를 초기화
   };
 
-  const handleSubmit = () => {
-    console.log(formFields);
-    setFormFields({
-      email: '',
-      password: '',
-    });
+  const { mutate: login } = useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      postLogIn(email, password),
+    onSuccess: (data) => {
+      console.log('로그인 성공!');
+      router.push('/'); // 로그인 성공 시 홈으로 이동
+      localStorage.setItem('user', JSON.stringify(data.user)); // 유저 정보를 로컬 스토리지에 저장
+    },
+    onError: (error) => {
+      console.error('로그인 실패:', error);
+      setError('이메일 또는 비밀번호를 다시 확인해주세요.');
+    },
+  });
+
+  const handleSubmit = async () => {
+    try {
+      await login({ email: formFields.email, password: formFields.password });
+      setFormFields({ email: '', password: '' });
+    } catch {
+      setError('이메일 또는 비밀번호를 다시 확인해주세요.');
+    }
   };
 
   const isAllInputFilled = () => {
@@ -48,6 +69,7 @@ export default function Login() {
           name="email"
           value={formFields.email}
           onChange={handleChange}
+          errorMessage={error}
         />
       </div>
       <div>
@@ -59,6 +81,7 @@ export default function Login() {
           name="password"
           value={formFields.password}
           onChange={handleChange}
+          errorMessage={error}
         />
       </div>
       <Button
