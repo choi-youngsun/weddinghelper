@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Dropdown, DropdownOption } from './Dropdown';
 import { useDropdown } from '@/hooks/useDropdown';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { postLogOut } from '@/api/auth/authAPI';
 
 export default function NavBar() {
   const { isOpen, onClose, onSwitch } = useDropdown();
@@ -19,9 +21,21 @@ export default function NavBar() {
     </button>
   );
 
+  const { mutate: logout } = useMutation({
+    mutationFn: () => postLogOut(),
+    onSuccess: () => {
+      console.log('로그아웃 성공!');
+      router.push('/login');
+      localStorage.removeItem('user');
+    },
+    onError: (error) => {
+      console.error('로그아웃 실패:', error);
+    },
+  });
+
   const handleOptionClick = (option: DropdownOption) => {
     if (option.value === 'logout') {
-      console.log('로그아웃 기능 추가 예정!');
+      logout();
     } else if (option.value === 'admin') {
       router.push('/admin');
     } else {
