@@ -1,6 +1,8 @@
+import { getUserSetting } from '@/api/admin/settingAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function Setting() {
@@ -8,24 +10,10 @@ export default function Setting() {
   const [tagValue, setTagValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const brideGroupOptions = [
-    { label: '대학교', value: '대학교' },
-    { label: '가족', value: '가족' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '초등학교', value: '초등학교' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
-
-  const broomGroupOptions = [
-    { label: '가족', value: '가족' },
-    { label: '대학교', value: '대학교' },
-    { label: '교회', value: '교회' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '커스트', value: '커스트' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
+  const { data } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserSetting(),
+  });
 
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -38,27 +26,7 @@ export default function Setting() {
   };
 
   //추후 API요청으로 변경, 현재는 동작 안함
-  const handleTagSubmit = (
-    options: { label: string; value: string }[],
-    inputValue: string
-  ) => {
-    // 입력 값이 비어 있는 경우 동작하지 않음
-    if (!inputValue.trim()) return;
-
-    // 이미 존재하는 값인지 확인
-    const isDuplicate = options.some(
-      (option) => option.label === inputValue && option.value === inputValue
-    );
-
-    if (isDuplicate) {
-      alert('이미 존재하는 태그입니다.');
-      return;
-    }
-
-    // 새로운 객체를 만들어 배열 마지막에 추가
-    const newOption = { label: inputValue, value: inputValue };
-    options.push(newOption);
-
+  const handleTagSubmit = (options: string) => {
     console.log('Updated Options:', options); // 디버깅용 콘솔
   };
 
@@ -105,9 +73,9 @@ export default function Setting() {
               className="shrink-0 px-[20px]"
               onClick={() => {
                 if (selectedTag === 'bride') {
-                  handleTagSubmit(brideGroupOptions, tagValue);
+                  handleTagSubmit(tagValue);
                 } else if (selectedTag === 'broom') {
-                  handleTagSubmit(broomGroupOptions, tagValue);
+                  handleTagSubmit(tagValue);
                 }
               }}
               disabled={tagValue === '' || errorMessage !== ''}
@@ -117,11 +85,11 @@ export default function Setting() {
           </div>
           <div className="mt-[20px] flex flex-wrap gap-3">
             {selectedTag === 'bride'
-              ? brideGroupOptions.map((option) => (
-                  <Tag key={option.value} value={option.label} />
+              ? data?.user.brideSide.map((option: string) => (
+                  <Tag key={option} value={option} />
                 ))
-              : broomGroupOptions.map((option) => (
-                  <Tag key={option.value} value={option.label} />
+              : data?.user.groomSide.map((option: string) => (
+                  <Tag key={option} value={option} />
                 ))}
           </div>
         </div>
