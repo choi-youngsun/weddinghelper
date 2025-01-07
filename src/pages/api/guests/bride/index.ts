@@ -29,7 +29,6 @@ export default authenticate(async function handler(
     const { side, guestName, affiliation, giftAmount, ticketCount, note } =
       req.body;
 
-    console.log(req.user);
     const userId = req.user.id; // 인증된 사용자 정보를 req.user에서 가져옴
 
     try {
