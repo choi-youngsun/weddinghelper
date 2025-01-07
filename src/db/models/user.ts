@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema<IUser>(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: false,
     },
     name: { type: String, required: true },
     email: { type: String, required: true }, // 필수
