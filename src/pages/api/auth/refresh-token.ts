@@ -6,7 +6,7 @@ const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 
 interface TokenPayload {
-  userId: string;
+  id: string;
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -32,17 +32,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log('decoded:', decoded);
 
     // JWT 토큰 발급
-    const newAccessToken = jwt.sign({ userId: decoded.userId }, ACCESS_SECRET, {
+    const newAccessToken = jwt.sign({ id: decoded.id }, ACCESS_SECRET, {
       expiresIn: '1h', // 1시간 만료
     });
 
-    const newRefreshToken = jwt.sign(
-      { userId: decoded.userId },
-      REFRESH_SECRET,
-      {
-        expiresIn: '7d', // 7일 만료
-      }
-    );
+    const newRefreshToken = jwt.sign({ id: decoded.id }, REFRESH_SECRET, {
+      expiresIn: '7d', // 7일 만료
+    });
 
     const accessTokenCookie = cookie.serialize('accessToken', newAccessToken, {
       httpOnly: true,
