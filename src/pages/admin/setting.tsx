@@ -131,21 +131,29 @@ export default function Setting() {
             </Button>
           </div>
           <div className="mt-[20px] flex flex-wrap gap-3">
-            {selectedTag === 'bride'
-              ? data?.user.brideSide.map((option: string) => (
+            {data?.user ? (
+              selectedTag === 'bride' ? (
+                data?.user.brideSide.map((option: string) => (
                   <Tag
                     key={option}
                     value={option}
                     handleClick={() => handleTagDelete('bride', option)}
                   />
                 ))
-              : data?.user.groomSide.map((option: string) => (
+              ) : (
+                data?.user.groomSide.map((option: string) => (
                   <Tag
                     key={option}
                     value={option}
                     handleClick={() => handleTagDelete('groom', option)}
                   />
-                ))}
+                ))
+              )
+            ) : (
+              <p className="mx-auto mt-[25%] text-center text-text-gray">
+                아직 등록된 소속 정보가 없어요!
+              </p>
+            )}
           </div>
         </div>
       </div>
