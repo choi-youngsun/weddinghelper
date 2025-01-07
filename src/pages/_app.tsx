@@ -4,12 +4,28 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { persistQueryClient } from '@tanstack/react-query-persist-client';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-const queryClient = new QueryClient();
+import { useEffect, useMemo } from 'react';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const queryClient = useMemo(() => new QueryClient(), []);
   const router = useRouter();
+
+  useEffect(() => {
+    // window가 정의된 경우에만 실행
+    if (typeof window !== 'undefined') {
+      const localStoragePersister = createSyncStoragePersister({
+        storage: window.localStorage,
+      });
+
+      persistQueryClient({
+        queryClient,
+        persister: localStoragePersister,
+      });
+    }
+  }, [queryClient]);
 
   // 경로별 클래스 설정
   const backgroundColor = () => {
