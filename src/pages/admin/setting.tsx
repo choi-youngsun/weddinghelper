@@ -11,7 +11,7 @@ export default function Setting() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserSetting(),
   });
@@ -92,7 +92,7 @@ export default function Setting() {
             buttonWidth="fitToChildren"
             buttonStyle="left-round"
             buttonColor={selectedTag === 'bride' ? 'yellow' : 'white'}
-            textColor={selectedTag === 'bride' ? 'white' : 'black'}
+            textColor={selectedTag === 'bride' ? 'black' : 'gray'}
             textSize="20"
             className="shrink-0 px-[10px]"
             onClick={() => setSelectedTag('bride')}
@@ -103,7 +103,7 @@ export default function Setting() {
             buttonWidth="fitToChildren"
             buttonStyle="left-round"
             buttonColor={selectedTag === 'groom' ? 'yellow' : 'white'}
-            textColor={selectedTag === 'groom' ? 'white' : 'black'}
+            textColor={selectedTag === 'groom' ? 'black' : 'gray'}
             textSize="20"
             className="shrink-0 px-[10px]"
             onClick={() => setSelectedTag('groom')}
@@ -131,9 +131,13 @@ export default function Setting() {
             </Button>
           </div>
           <div className="mt-[20px] flex flex-wrap gap-3">
-            {data?.user ? (
-              selectedTag === 'bride' ? (
-                data?.user.brideSide.map((option: string) => (
+            {isLoading ? (
+              <p className="ml-[10px] text-text-gray">Loading...</p>
+            ) : selectedTag === 'bride' ? (
+              // brideSide에 대한 조건 처리
+              data?.user.brideSide?.length ? (
+                // brideSide가 있을 때
+                data.user.brideSide.map((option: string) => (
                   <Tag
                     key={option}
                     value={option}
@@ -141,17 +145,25 @@ export default function Setting() {
                   />
                 ))
               ) : (
-                data?.user.groomSide.map((option: string) => (
-                  <Tag
-                    key={option}
-                    value={option}
-                    handleClick={() => handleTagDelete('groom', option)}
-                  />
-                ))
+                // brideSide가 없을 때
+                <p className="mx-auto mt-[25%] text-center text-text-gray">
+                  아직 등록된 신부측 소속 정보가 없어요!
+                </p>
               )
+            ) : // groomSide에 대한 조건 처리
+            data?.user.groomSide?.length ? (
+              // groomSide가 있을 때
+              data.user.groomSide.map((option: string) => (
+                <Tag
+                  key={option}
+                  value={option}
+                  handleClick={() => handleTagDelete('groom', option)}
+                />
+              ))
             ) : (
+              // groomSide가 없을 때
               <p className="mx-auto mt-[25%] text-center text-text-gray">
-                아직 등록된 소속 정보가 없어요!
+                아직 등록된 신랑측 소속 정보가 없어요!
               </p>
             )}
           </div>
