@@ -22,7 +22,7 @@ const brideGuestSchema = new mongoose.Schema(
       required: true,
     },
     orderNumber: { type: Number, required: true }, // 필수
-    side: { type: String, required: true }, // 필수
+    side: { type: String, required: true, enum: ['bride', 'groom'] }, // 필수
     guestName: { type: String, required: true }, // 필수
     affiliation: { type: String, required: true }, // 필수
     giftAmount: { type: Number, default: null }, // 선택

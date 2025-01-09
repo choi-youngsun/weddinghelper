@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // 타입 정의 (TypeScript용)
-interface IGroomGuest extends Document {
+export interface IGroomGuest extends Document {
   userId: mongoose.Schema.Types.ObjectId; // 사용자 ID
   orderNumber: number; // 정렬 번호
   side: string; // 신부측, 신랑측 등
@@ -16,9 +16,13 @@ interface IGroomGuest extends Document {
 
 const groomGuestSchema = new mongoose.Schema(
   {
-    userId: { type: Number, required: true }, // 필수
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     orderNumber: { type: Number, required: true }, // 필수
-    side: { type: String, required: true, enum: ['신부측', '신랑측'] }, // 필수, 선택값 제한
+    side: { type: String, required: true, enum: ['bride', 'groom'] }, // 필수, 선택값 제한
     guestName: { type: String, required: true }, // 필수
     affiliation: { type: String, required: true }, // 필수
     giftAmount: { type: Number, default: null }, // 선택
