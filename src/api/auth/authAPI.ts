@@ -1,4 +1,4 @@
-import axiosInstance from '../axiosInstance';
+import { axiosInstance, publicAxiosInstance } from '../axiosInstance';
 
 // 회원가입 API
 export const postSignUp = async (
@@ -7,7 +7,7 @@ export const postSignUp = async (
   password: string,
   passwordCheck: string
 ) => {
-  const response = await axiosInstance.post('auth/signup', {
+  const response = await publicAxiosInstance.post('auth/signup', {
     name,
     email,
     password,

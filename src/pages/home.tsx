@@ -14,7 +14,7 @@ export default function Home() {
           신부측 하객
         </Button>
       </Link>
-      <Link href={'/guest/broom'} className="w-full">
+      <Link href={'/guest/groom'} className="w-full">
         <Button buttonColor="white" borderColor="shadow">
           신랑측 하객
         </Button>

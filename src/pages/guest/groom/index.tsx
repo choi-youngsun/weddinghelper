@@ -3,8 +3,11 @@ import { useModal } from '@/hooks/useModal';
 import { useRadioButton } from '@/hooks/useRadioButton';
 import { useSelectBox } from '@/hooks/useSelectBox';
 import { useState } from 'react';
+import useUserData from '@/hooks/useUserData';
+import { Guest, postGroomGuestInfo } from '@/api/guest/guestAPI';
+import { useMutation } from '@tanstack/react-query';
 
-export default function GuestBroomPage() {
+export default function GuestGroomPage() {
   const {
     selectedOption: selectedTicketOption,
     setSelectedOption: setSelectedTicketOption,
@@ -26,15 +29,13 @@ export default function GuestBroomPage() {
     }, 3000);
   };
 
-  const broomGroupOptions = [
-    { label: '가족', value: '가족' },
-    { label: '대학교', value: '대학교' },
-    { label: '교회', value: '교회' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '커스트', value: '커스트' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
+  const { data: userData } = useUserData();
+  const sideList = userData?.user.groomSide || [];
+
+  const broomGroupOptions = sideList?.map((side: string) => ({
+    value: side,
+    label: side,
+  }));
 
   const [nameValue, setNameValue] = useState('');
 
@@ -44,22 +45,41 @@ export default function GuestBroomPage() {
     setNameValue(value);
   };
 
+  const { mutate: postGroomGuest } = useMutation({
+    mutationFn: (guest: Guest) => postGroomGuestInfo(guest),
+    onSuccess: (data) => {
+      console.log('신랑측 하객 정보 등록 성공:', data);
+    },
+    onError: (error) => {
+      console.error('신랑측 하객 정보 등록 실패:', error);
+    },
+  });
+
   const handleSubmit = () => {
-    console.log({
-      구분: '신랑측',
-      이름: nameValue,
-      소속: selectedGroupOption,
-      식권: selectedTicketOption,
-    });
-    setNameValue('');
-    setSelectedGroupOption(null);
-    setSelectedTicketOption(null);
-    handleOpenModal();
+    if (nameValue && selectedGroupOption) {
+      const newGuest: Guest = {
+        side: 'groom',
+        guestName: nameValue,
+        affiliation: selectedGroupOption.value,
+        ticketCount: selectedTicketOption,
+        giftAmount: null,
+        note: '',
+      };
+
+      // 하객 등록 API 호출
+      postGroomGuest(newGuest);
+
+      // 폼 초기화
+      setNameValue('');
+      setSelectedGroupOption(null);
+      setSelectedTicketOption(null);
+      handleOpenModal();
+    }
   };
 
   return (
     <GuestForm
-      side="broom"
+      side="groom"
       nameValue={nameValue}
       onNameChange={handleNameChange}
       groupOptions={broomGroupOptions}

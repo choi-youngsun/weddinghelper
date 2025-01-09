@@ -6,7 +6,7 @@ const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 
 interface TokenPayload {
-  userId: string;
+  id: string;
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -15,9 +15,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   // 쿠키에서 refreshToken 추출
-  console.log('req.cookies:', req.cookies);
   const refreshToken = req.cookies.refreshToken;
-  console.log('refreshToken:', refreshToken);
 
   if (!refreshToken) {
     return res.status(400).json({ message: 'Refresh token is required' });
@@ -29,20 +27,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     const decoded = jwt.verify(refreshToken, REFRESH_SECRET) as TokenPayload;
 
-    console.log('decoded:', decoded);
-
     // JWT 토큰 발급
-    const newAccessToken = jwt.sign({ userId: decoded.userId }, ACCESS_SECRET, {
+    const newAccessToken = jwt.sign({ id: decoded.id }, ACCESS_SECRET, {
       expiresIn: '1h', // 1시간 만료
     });
 
-    const newRefreshToken = jwt.sign(
-      { userId: decoded.userId },
-      REFRESH_SECRET,
-      {
-        expiresIn: '7d', // 7일 만료
-      }
-    );
+    const newRefreshToken = jwt.sign({ id: decoded.id }, REFRESH_SECRET, {
+      expiresIn: '7d', // 7일 만료
+    });
 
     const accessTokenCookie = cookie.serialize('accessToken', newAccessToken, {
       httpOnly: true,

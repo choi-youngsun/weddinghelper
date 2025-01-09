@@ -9,10 +9,11 @@ export default authenticate(async function handler(
 ) {
   if (req.method === 'PATCH') {
     const { side, affiliation, action } = req.body; // action, side, affiliation 정보 받음
-    const userId = req.user._id; // 인증된 사용자 정보를 req.user에서 가져옴
+
+    const userId = req.user.id; // 인증된 사용자 정보를 req.user에서 가져옴
 
     try {
-      const user = await UserData.findOne({ userId });
+      const user = await UserData.findOne({ _id: userId });
 
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -48,7 +49,7 @@ export default authenticate(async function handler(
 
       // 해당 유저 업데이트
       const updatedUser = await UserData.findOneAndUpdate(
-        { userId },
+        { _id: userId },
         updateQuery,
         { new: true }
       ).select('name email brideSide groomSide'); // 업데이트된 사용자 정보에서 비밀번호 제외;
@@ -66,10 +67,10 @@ export default authenticate(async function handler(
       res.status(500).json({ message: 'Server error' });
     }
   } else if (req.method === 'GET') {
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     try {
-      const user = await UserData.findOne({ userId }).select(
+      const user = await UserData.findOne({ _id: userId }).select(
         'name email brideSide groomSide'
       ); // 사용자 정보 조회 (비밀번호 제외)   .select('name email brideSide groomSide');
       res.status(200).json({

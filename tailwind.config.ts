@@ -5,6 +5,16 @@ export default {
 
   theme: {
     extend: {
+      animation: {
+        fadeInOut: 'fadeInOut 1s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeInOut: {
+          '0%': { opacity: '0.5' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0.5' },
+        },
+      },
       boxShadow: {
         'right-bottom': '4px 4px 6px rgba(0, 0, 0, 0.2)',
       },
