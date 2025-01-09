@@ -52,6 +52,9 @@ axiosInstance.interceptors.response.use(
         return axios(originalRequest); // 요청 재시도
       } catch (refreshError) {
         // 리프레시 토큰이 실패하면 로그아웃 등의 처리를 할 수 있습니다.
+        console.error('리프레시 토큰 요청 실패:', refreshError);
+        // 로그인 페이지로 리디렉션
+        window.location.href = 'http://localhost:3000/login';
         return Promise.reject(refreshError);
       }
     }
