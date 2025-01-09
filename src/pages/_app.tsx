@@ -34,9 +34,9 @@ export default function App({ Component, pageProps }: AppProps) {
         return 'bg-background-pink';
       case '/guest/bride':
         return 'bg-background-pink';
-      case '/admin/broom':
+      case '/admin/groom':
         return 'bg-background-blue';
-      case '/guest/broom':
+      case '/guest/groom':
         return 'bg-background-blue';
       default:
         return 'bg-background-yellow';
