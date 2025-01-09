@@ -1,8 +1,8 @@
-import BrideGuest, { IBrideGuest } from '@/db/models/brideGuest';
 import { NextApiResponse } from 'next';
 import { ExtendedNextApiRequest } from '@/api/authenticate';
 import authenticate from '@/api/authenticate';
 import OrderNumber from '@/db/models/orderNumber';
+import GroomGuest, { IGroomGuest } from '@/db/models/groomGuest';
 
 type ResponseData = {
   success: boolean;
@@ -16,7 +16,7 @@ type ResponseData = {
     ticketCount: number;
     note: string;
   };
-  data?: IBrideGuest[];
+  data?: IGroomGuest[];
   createdAt?: string;
   updatedAt?: string;
 };
@@ -32,7 +32,7 @@ export default authenticate(async function handler(
     const userId = req.user.id; // 인증된 사용자 정보를 req.user에서 가져옴
 
     try {
-      const existingGuest = await BrideGuest.findOne({
+      const existingGuest = await GroomGuest.findOne({
         userId,
         guestName,
         affiliation,
@@ -56,7 +56,7 @@ export default authenticate(async function handler(
       // 새로운 하객의 orderNumber 설정
       const newOrderNumber = orderEntry.lastOrderNumber + 1;
 
-      const newGuest = await BrideGuest.create({
+      const newGuest = await GroomGuest.create({
         userId,
         orderNumber: newOrderNumber,
         side,
@@ -84,7 +84,7 @@ export default authenticate(async function handler(
     const userId = req.user.id;
 
     try {
-      const guests = await BrideGuest.find({ userId });
+      const guests = await GroomGuest.find({ userId });
       res.status(200).json({
         success: true,
         message: '조회 성공!',

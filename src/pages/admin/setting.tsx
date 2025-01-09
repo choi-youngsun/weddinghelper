@@ -1,31 +1,42 @@
+import { patchUserSetting } from '@/api/admin/settingAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
+import useUserData from '@/hooks/useUserData';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function Setting() {
-  const [selectedTag, setSelectedTag] = useState<'bride' | 'broom'>('bride');
+  const [selectedTag, setSelectedTag] = useState<'bride' | 'groom'>('bride');
   const [tagValue, setTagValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const queryClient = useQueryClient();
 
-  const brideGroupOptions = [
-    { label: '대학교', value: '대학교' },
-    { label: '가족', value: '가족' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '초등학교', value: '초등학교' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
+  const { data, isLoading } = useUserData();
 
-  const broomGroupOptions = [
-    { label: '가족', value: '가족' },
-    { label: '대학교', value: '대학교' },
-    { label: '교회', value: '교회' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '커스트', value: '커스트' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
+  const { mutate: patchAffiliation } = useMutation({
+    mutationFn: ({
+      side,
+      affiliation,
+      action,
+    }: {
+      side: string;
+      affiliation: string;
+      action: string;
+    }) => patchUserSetting(side, affiliation, action),
+    onSuccess: (data) => {
+      console.log('소속 수정 성공:', data);
+      setTagValue('');
+    },
+    onSettled: () => {
+      // 쿼리 무효화 및 리패치
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+    onError: (error) => {
+      setErrorMessage('이미 추가된 소속입니다.');
+      console.error('소속 수정 실패:', error);
+    },
+  });
 
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -37,29 +48,36 @@ export default function Setting() {
     }
   };
 
-  //추후 API요청으로 변경, 현재는 동작 안함
-  const handleTagSubmit = (
-    options: { label: string; value: string }[],
-    inputValue: string
-  ) => {
-    // 입력 값이 비어 있는 경우 동작하지 않음
-    if (!inputValue.trim()) return;
-
-    // 이미 존재하는 값인지 확인
-    const isDuplicate = options.some(
-      (option) => option.label === inputValue && option.value === inputValue
-    );
-
-    if (isDuplicate) {
-      alert('이미 존재하는 태그입니다.');
-      return;
+  const handleTagSubmit = (selectedTag: string, tagValue: string) => {
+    if (selectedTag === 'bride') {
+      patchAffiliation({
+        side: 'brideSide',
+        affiliation: tagValue,
+        action: 'add',
+      });
+    } else if (selectedTag === 'groom') {
+      patchAffiliation({
+        side: 'groomSide',
+        affiliation: tagValue,
+        action: 'add',
+      });
     }
+  };
 
-    // 새로운 객체를 만들어 배열 마지막에 추가
-    const newOption = { label: inputValue, value: inputValue };
-    options.push(newOption);
-
-    console.log('Updated Options:', options); // 디버깅용 콘솔
+  const handleTagDelete = (selectedTag: string, tagValue: string) => {
+    if (selectedTag === 'bride') {
+      patchAffiliation({
+        side: 'brideSide',
+        affiliation: tagValue,
+        action: 'remove',
+      });
+    } else if (selectedTag === 'groom') {
+      patchAffiliation({
+        side: 'groomSide',
+        affiliation: tagValue,
+        action: 'remove',
+      });
+    }
   };
 
   return (
@@ -71,7 +89,7 @@ export default function Setting() {
             buttonWidth="fitToChildren"
             buttonStyle="left-round"
             buttonColor={selectedTag === 'bride' ? 'yellow' : 'white'}
-            textColor={selectedTag === 'bride' ? 'white' : 'black'}
+            textColor={selectedTag === 'bride' ? 'black' : 'gray'}
             textSize="20"
             className="shrink-0 px-[10px]"
             onClick={() => setSelectedTag('bride')}
@@ -81,11 +99,11 @@ export default function Setting() {
           <Button
             buttonWidth="fitToChildren"
             buttonStyle="left-round"
-            buttonColor={selectedTag === 'broom' ? 'yellow' : 'white'}
-            textColor={selectedTag === 'broom' ? 'white' : 'black'}
+            buttonColor={selectedTag === 'groom' ? 'yellow' : 'white'}
+            textColor={selectedTag === 'groom' ? 'black' : 'gray'}
             textSize="20"
             className="shrink-0 px-[10px]"
-            onClick={() => setSelectedTag('broom')}
+            onClick={() => setSelectedTag('groom')}
           >
             신랑측
           </Button>
@@ -103,26 +121,48 @@ export default function Setting() {
             <Button
               buttonWidth="fitToChildren"
               className="shrink-0 px-[20px]"
-              onClick={() => {
-                if (selectedTag === 'bride') {
-                  handleTagSubmit(brideGroupOptions, tagValue);
-                } else if (selectedTag === 'broom') {
-                  handleTagSubmit(broomGroupOptions, tagValue);
-                }
-              }}
+              onClick={() => handleTagSubmit(selectedTag, tagValue)}
               disabled={tagValue === '' || errorMessage !== ''}
             >
               추가
             </Button>
           </div>
           <div className="mt-[20px] flex flex-wrap gap-3">
-            {selectedTag === 'bride'
-              ? brideGroupOptions.map((option) => (
-                  <Tag key={option.value} value={option.label} />
+            {isLoading ? (
+              <p className="ml-[10px] text-text-gray">Loading...</p>
+            ) : selectedTag === 'bride' ? (
+              // brideSide에 대한 조건 처리
+              data?.user.brideSide?.length ? (
+                // brideSide가 있을 때
+                data.user.brideSide.map((option: string) => (
+                  <Tag
+                    key={option}
+                    value={option}
+                    handleClick={() => handleTagDelete('bride', option)}
+                  />
                 ))
-              : broomGroupOptions.map((option) => (
-                  <Tag key={option.value} value={option.label} />
-                ))}
+              ) : (
+                // brideSide가 없을 때
+                <p className="mx-auto mt-[25%] text-center text-text-gray">
+                  아직 등록된 신부측 소속 정보가 없어요!
+                </p>
+              )
+            ) : // groomSide에 대한 조건 처리
+            data?.user.groomSide?.length ? (
+              // groomSide가 있을 때
+              data.user.groomSide.map((option: string) => (
+                <Tag
+                  key={option}
+                  value={option}
+                  handleClick={() => handleTagDelete('groom', option)}
+                />
+              ))
+            ) : (
+              // groomSide가 없을 때
+              <p className="mx-auto mt-[25%] text-center text-text-gray">
+                아직 등록된 신랑측 소속 정보가 없어요!
+              </p>
+            )}
           </div>
         </div>
       </div>

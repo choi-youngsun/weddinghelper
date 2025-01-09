@@ -1,8 +1,24 @@
+import { Guest, postBrideGuestInfo } from '@/api/guest/guestAPI';
 import GuestForm from '@/components/guest/GuestForm';
 import { useModal } from '@/hooks/useModal';
 import { useRadioButton } from '@/hooks/useRadioButton';
 import { useSelectBox } from '@/hooks/useSelectBox';
+import useUserData from '@/hooks/useUserData';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
+
+interface UserData {
+  _id: string; // MongoDB ObjectId 타입
+  name: string;
+  email: string;
+  brideSide: string[]; // 신부측 소속 정보
+  groomSide: string[]; // 신랑측 소속 정보
+}
+
+export interface QueryResponse {
+  message: string;
+  user: UserData;
+}
 
 export default function GuestBridePage() {
   const {
@@ -16,6 +32,13 @@ export default function GuestBridePage() {
     handleSelect: handleGroupSelect,
   } = useSelectBox();
   const { isOpen, onClose, onOpen } = useModal();
+  const { data: userData } = useUserData();
+  const sideList = userData?.user.brideSide || [];
+
+  const groupOptions = sideList?.map((side: string) => ({
+    value: side,
+    label: side,
+  }));
 
   const handleOpenModal = () => {
     onOpen();
@@ -26,16 +49,6 @@ export default function GuestBridePage() {
     }, 3000);
   };
 
-  const groupOptions = [
-    { label: '대학교', value: '대학교' },
-    { label: '가족', value: '가족' },
-    { label: '교회', value: '교회' },
-    { label: '중/고등학교', value: '중/고등학교' },
-    { label: '동호회', value: '동호회' },
-    { label: '직장', value: '직장' },
-    { label: '기타', value: '기타' },
-  ];
-
   const [nameValue, setNameValue] = useState('');
 
   // 입력값 변경 핸들러
@@ -44,17 +57,36 @@ export default function GuestBridePage() {
     setNameValue(value);
   };
 
+  const { mutate: postBrideGuest } = useMutation({
+    mutationFn: (guest: Guest) => postBrideGuestInfo(guest),
+    onSuccess: (data) => {
+      console.log('신부측 하객 정보 등록 성공:', data);
+    },
+    onError: (error) => {
+      console.error('신부측 하객 정보 등록 실패:', error);
+    },
+  });
+
   const handleSubmit = () => {
-    console.log({
-      구분: '신부측',
-      이름: nameValue,
-      소속: selectedGroupOption,
-      식권: selectedTicketOption,
-    });
-    setNameValue('');
-    setSelectedGroupOption(null);
-    setSelectedTicketOption(null);
-    handleOpenModal();
+    if (nameValue && selectedGroupOption) {
+      const newGuest: Guest = {
+        side: 'bride',
+        guestName: nameValue,
+        affiliation: selectedGroupOption.value,
+        ticketCount: selectedTicketOption,
+        giftAmount: null,
+        note: '',
+      };
+
+      // 하객 등록 API 호출
+      postBrideGuest(newGuest);
+
+      // 폼 초기화
+      setNameValue('');
+      setSelectedGroupOption(null);
+      setSelectedTicketOption(null);
+      handleOpenModal();
+    }
   };
 
   return (

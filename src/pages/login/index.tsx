@@ -1,29 +1,71 @@
+import { getUserSetting } from '@/api/admin/settingAPI';
+import { postLogIn } from '@/api/auth/authAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function Login() {
-  // API연결 이후 유효성 검사 추가 예정
-  // 필드 상태를 객체로 관리
+  const router = useRouter();
+
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
   });
 
+  const [error, setError] = useState('');
+
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormFields((prev) => ({ ...prev, [name]: value }));
+    setError(''); // 입력값이 변경될 때마다 에러를 초기화
   };
 
-  const handleSubmit = () => {
-    console.log(formFields);
-    setFormFields({
-      email: '',
-      password: '',
-    });
+  const queryClient = useQueryClient();
+
+  const { mutate: login } = useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      postLogIn(email, password),
+    onSuccess: async () => {
+      // async로 선언하여 await 사용 가능
+      console.log('로그인 성공!');
+
+      // 로그인 성공 후 홈으로 이동
+      router.push('/home');
+
+      // 사용자 정보를 가져와서 쿼리 데이터에 저장
+      const userData = await getUserSetting(); // 사용자 정보 요청
+
+      // 'user' 쿼리에 저장
+      queryClient.setQueryData(['user'], userData);
+
+      // 로컬 스토리지에 유저 정보 저장
+      localStorage.setItem('user', JSON.stringify(userData));
+    },
+  });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      // 로컬 스토리지에서 유저 데이터 가져오기
+      const userData = JSON.parse(storedUser);
+
+      // 'user' 쿼리에 저장
+      queryClient.setQueryData(['user'], userData);
+    }
+  }, [queryClient]); // 페이지가 처음 로드될 때 실행
+
+  const handleSubmit = async () => {
+    try {
+      await login({ email: formFields.email, password: formFields.password });
+      setFormFields({ email: '', password: '' });
+    } catch {
+      setError('이메일 또는 비밀번호를 다시 확인해주세요.');
+    }
   };
 
   const isAllInputFilled = () => {
@@ -48,6 +90,7 @@ export default function Login() {
           name="email"
           value={formFields.email}
           onChange={handleChange}
+          errorMessage={error}
         />
       </div>
       <div>
@@ -59,6 +102,7 @@ export default function Login() {
           name="password"
           value={formFields.password}
           onChange={handleChange}
+          errorMessage={error}
         />
       </div>
       <Button

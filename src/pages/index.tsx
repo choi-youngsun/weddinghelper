@@ -1,26 +1,35 @@
 import Button from '@/components/@shared/Button';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // 기본 Link 클릭 동작을 막음
+
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      // user가 있으면 /home으로 리디렉션
+      router.push('/home');
+    } else {
+      // user가 없으면 /login으로 리디렉션
+      router.push('/login');
+    }
+  };
+
   return (
-    <main>
-      <div className="mx-auto flex w-[200px] flex-col items-center justify-center gap-[20px]">
-        <Link href={'/admin'} className="mt-[300px] w-full ">
-          <Button buttonColor="white" borderColor="shadow">
-            관리자
-          </Button>
-        </Link>
-        <Link href={'/guest/bride'} className="w-full">
-          <Button buttonColor="white" borderColor="shadow">
-            신부측 하객
-          </Button>
-        </Link>
-        <Link href={'/guest/broom'} className="w-full">
-          <Button buttonColor="white" borderColor="shadow">
-            신랑측 하객
-          </Button>
-        </Link>
-      </div>
-    </main>
+    <div className="mx-auto flex w-[200px] flex-col items-center justify-center gap-[20px]">
+      <Link
+        href="/home"
+        onClick={handleLinkClick}
+        className="mt-[300px] w-full "
+      >
+        <Button buttonColor="white" borderColor="shadow">
+          시작하기
+        </Button>
+      </Link>
+    </div>
   );
 }

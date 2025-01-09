@@ -4,7 +4,7 @@ type ButtonProps = {
   buttonStyle?: 'square' | 'round' | 'left-round';
   buttonWidth?: 'fitToChildren' | 'fitToParent';
   buttonColor?: 'yellow' | 'red' | 'pink' | 'blue' | 'green' | 'white';
-  textColor?: 'white' | 'black';
+  textColor?: 'white' | 'black' | 'gray';
   textSize?: '16' | '20' | '24' | '16_bold' | '20_bold';
   textWeight?: 'regular' | 'bold';
   borderColor?: 'yellow' | 'gray' | 'none' | 'shadow';
@@ -79,6 +79,7 @@ export default function Button({
       'rounded-bl-[16px] rounded-tl-[16px]': buttonStyle === 'left-round',
       'text-text-black': textColor === 'black',
       'text-text-white': textColor === 'white',
+      'text-text-gray': textColor === 'gray',
       'text-sm-regular': textSize === '16',
       'text-md-regular': textSize === '20',
       'text-lg-regular': textSize === '24',

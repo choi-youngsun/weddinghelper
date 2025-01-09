@@ -1,19 +1,33 @@
 import mongoose from 'mongoose';
 
 interface IUser {
+  userId: mongoose.Schema.Types.ObjectId;
   name: string;
   email: string;
   password: string;
-  passwordCheck: string;
+  brideSide: string[];
+  groomSide: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-const userSchema = new mongoose.Schema<IUser>({
-  name: { type: String, required: true },
-  email: { type: String, required: true }, // 필수
-  password: { type: String, required: true }, // 필수
-  passwordCheck: { type: String, required: true },
-});
+const userSchema = new mongoose.Schema<IUser>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: false,
+    },
+    name: { type: String, required: true },
+    email: { type: String, required: true }, // 필수
+    password: { type: String, required: true }, // 필수
+    brideSide: { type: [String], default: [] }, // 신부측 소속 정보
+    groomSide: { type: [String], default: [] }, // 신랑측 소속 정보
+  },
+  { timestamps: true }
+);
 
-const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
+const UserData =
+  mongoose.models.UserData || mongoose.model<IUser>('UserData', userSchema);
 
-export default User;
+export default UserData;
