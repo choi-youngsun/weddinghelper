@@ -1,8 +1,9 @@
-import { getUserSetting, patchUserSetting } from '@/api/admin/settingAPI';
+import { patchUserSetting } from '@/api/admin/settingAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import useUserData from '@/hooks/useUserData';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function Setting() {
@@ -11,10 +12,7 @@ export default function Setting() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['user'],
-    queryFn: () => getUserSetting(),
-  });
+  const { data, isLoading } = useUserData();
 
   const { mutate: patchAffiliation } = useMutation({
     mutationFn: ({
@@ -50,7 +48,6 @@ export default function Setting() {
     }
   };
 
-  //추후 API요청으로 변경, 현재는 동작 안함
   const handleTagSubmit = (selectedTag: string, tagValue: string) => {
     if (selectedTag === 'bride') {
       patchAffiliation({
