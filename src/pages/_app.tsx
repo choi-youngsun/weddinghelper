@@ -66,7 +66,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta property="og:url" content="https://weddinghelper.vercel.app/" />
         <meta
           property="og:image"
-          content="https://weddinghelper.vercel.app/images/thumbnail.png"
+          content="https://weddinghelper.vercel.app/images/thumbnail_new.png"
         />
         <meta property="og:site_name" content="웨딩헬퍼" />
         <meta property="og:locale" content="ko_KR" />
@@ -74,7 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
         {/* Twitter 카드 메타태그 */}
         <meta
           name="twitter:card"
-          content="https://weddinghelper.vercel.app/images/thumbnail.png"
+          content="https://weddinghelper.vercel.app/images/thumbnail_new.png"
         />
         <meta name="twitter:title" content="웨딩헬퍼" />
         <meta
@@ -83,7 +83,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta
           name="twitter:image"
-          content="https://weddinghelper.vercel.app/images/thumbnail.png"
+          content="https://weddinghelper.vercel.app/images/thumbnail_new.png"
         />
 
         {/* Favicon */}
