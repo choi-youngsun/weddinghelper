@@ -1,40 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# WeddingHelper
+https://weddinghelper.vercel.app/images/thumbnail.png
+**[WeddingHelper](https://weddinghelper.vercel.app/)**는 결혼식 하객 정보를 손쉽게 관리할 수 있는 웹 애플리케이션입니다. 신랑측과 신부측 하객 정보를 등록하고, 이를 취합하고, 관리할 수 있는 기능을 제공합니다. 또한 하객 정보를 엑셀 파일로 내보내는 기능을 지원합니다.
 
-## Getting Started
+## 주요 기능
 
-First, run the development server:
+### 1. 하객 정보 등록
+하객 정보를 쉽게 등록하고 관리할 수 있습니다. 하객의 이름, 소속 등을 추가할 수 있습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![하객 정보 등록](gif-placeholder.gif)  
+*예시: 하객 정보 등록 화면*
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 하객 정보 취합
+등록된 하객 정보를 취합하여 한 눈에 확인할 수 있습니다. 전체 하객 리스트를 한 번에 볼 수 있어 관리가 용이합니다.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+![하객 정보 취합](gif-placeholder.gif)  
+*예시: 하객 정보 취합 화면*
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 3. 소속 정보 추가/삭제
+하객의 소속(신랑측, 신부측)을 추가하거나 삭제할 수 있습니다. 소속 정보를 관리하여 하객 리스트를 그룹별로 쉽게 구분할 수 있습니다.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+![소속 정보 추가/삭제](gif-placeholder.gif)  
+*예시: 소속 정보 추가/삭제 화면*
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. 엑셀로 내보내기
+하객 정보를 엑셀 파일로 내보내어 오프라인으로 저장하거나, 결혼식 준비 시 참고할 수 있습니다.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+![엑셀로 내보내기](gif-placeholder.gif)  
+*예시: 엑셀 내보내기 화면*
