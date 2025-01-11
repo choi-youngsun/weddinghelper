@@ -132,7 +132,7 @@ export default function Setting() {
               <p className="ml-[10px] text-text-gray">Loading...</p>
             ) : selectedTag === 'bride' ? (
               // brideSide에 대한 조건 처리
-              data?.user.brideSide?.length ? (
+              data?.user?.brideSide?.length ? (
                 // brideSide가 있을 때
                 data.user.brideSide.map((option: string) => (
                   <Tag
@@ -148,7 +148,7 @@ export default function Setting() {
                 </p>
               )
             ) : // groomSide에 대한 조건 처리
-            data?.user.groomSide?.length ? (
+            data?.user?.groomSide?.length ? (
               // groomSide가 있을 때
               data.user.groomSide.map((option: string) => (
                 <Tag
