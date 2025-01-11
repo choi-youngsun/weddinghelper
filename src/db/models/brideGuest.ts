@@ -14,7 +14,7 @@ export interface IBrideGuest extends Document {
   updatedAt?: Date;
 }
 
-const brideGuestSchema = new mongoose.Schema(
+export const brideGuestSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
