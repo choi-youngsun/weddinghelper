@@ -17,6 +17,7 @@ type GuestFormProps = {
   onSubmit: () => void;
   isOpen: boolean;
   onClose: () => void;
+  error: string | null;
 };
 
 export default function GuestForm({
@@ -31,6 +32,7 @@ export default function GuestForm({
   onSubmit,
   isOpen,
   onClose,
+  error,
 }: GuestFormProps) {
   const radioOption = [
     { label: '0', value: '0' },
@@ -45,7 +47,8 @@ export default function GuestForm({
     return (
       nameValue !== '' &&
       selectedGroupOption !== null &&
-      selectedTicketOption !== null
+      selectedTicketOption !== null &&
+      !error
     );
   };
 
@@ -62,6 +65,7 @@ export default function GuestForm({
             name="name"
             value={nameValue}
             onChange={onNameChange}
+            errorMessage={error}
           />
         </div>
         <div>

@@ -5,6 +5,7 @@ import { useRadioButton } from '@/hooks/useRadioButton';
 import { useSelectBox } from '@/hooks/useSelectBox';
 import { useUserAffiliationData } from '@/hooks/useUserData';
 import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { useState } from 'react';
 
 interface UserData {
@@ -50,20 +51,34 @@ export default function GuestBridePage() {
   };
 
   const [nameValue, setNameValue] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   // 입력값 변경 핸들러
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setNameValue(value);
+    setError(null);
   };
 
   const { mutate: postBrideGuest } = useMutation({
     mutationFn: (guest: Guest) => postBrideGuestInfo(guest),
     onSuccess: (data) => {
       console.log('신부측 하객 정보 등록 성공:', data);
+
+      // 폼 초기화
+      setNameValue('');
+      setError(null);
+      setSelectedGroupOption(null);
+      setSelectedTicketOption(null);
+      handleOpenModal();
     },
     onError: (error) => {
-      console.error('신부측 하객 정보 등록 실패:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+        console.error('신부측 하객 정보 등록 실패:', error);
+      }
     },
   });
 
@@ -80,12 +95,6 @@ export default function GuestBridePage() {
 
       // 하객 등록 API 호출
       postBrideGuest(newGuest);
-
-      // 폼 초기화
-      setNameValue('');
-      setSelectedGroupOption(null);
-      setSelectedTicketOption(null);
-      handleOpenModal();
     }
   };
 
@@ -102,6 +111,7 @@ export default function GuestBridePage() {
       onSubmit={handleSubmit}
       isOpen={isOpen}
       onClose={onClose}
+      error={error}
     />
   );
 }
