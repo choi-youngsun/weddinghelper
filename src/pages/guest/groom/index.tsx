@@ -3,7 +3,7 @@ import { useModal } from '@/hooks/useModal';
 import { useRadioButton } from '@/hooks/useRadioButton';
 import { useSelectBox } from '@/hooks/useSelectBox';
 import { useState } from 'react';
-import useUserData from '@/hooks/useUserData';
+import { useUserAffiliationData } from '@/hooks/useUserData';
 import { Guest, postGroomGuestInfo } from '@/api/guest/guestAPI';
 import { useMutation } from '@tanstack/react-query';
 
@@ -29,7 +29,7 @@ export default function GuestGroomPage() {
     }, 3000);
   };
 
-  const { data: userData } = useUserData();
+  const { data: userData } = useUserAffiliationData();
   const sideList = userData?.user.groomSide || [];
 
   const broomGroupOptions = sideList?.map((side: string) => ({

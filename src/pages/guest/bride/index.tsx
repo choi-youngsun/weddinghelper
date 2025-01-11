@@ -3,7 +3,7 @@ import GuestForm from '@/components/guest/GuestForm';
 import { useModal } from '@/hooks/useModal';
 import { useRadioButton } from '@/hooks/useRadioButton';
 import { useSelectBox } from '@/hooks/useSelectBox';
-import useUserData from '@/hooks/useUserData';
+import { useUserAffiliationData } from '@/hooks/useUserData';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -32,7 +32,7 @@ export default function GuestBridePage() {
     handleSelect: handleGroupSelect,
   } = useSelectBox();
   const { isOpen, onClose, onOpen } = useModal();
-  const { data: userData } = useUserData();
+  const { data: userData } = useUserAffiliationData();
   const sideList = userData?.user.brideSide || [];
 
   const groupOptions = sideList?.map((side: string) => ({
