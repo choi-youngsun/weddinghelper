@@ -15,7 +15,7 @@ export default function AdminPage() {
             신부측 방명록 관리
           </Button>
         </Link>
-        <Link href={'/admin/broom'} className="w-full">
+        <Link href={'/admin/groom'} className="w-full">
           <Button buttonColor="white" borderColor="shadow">
             신랑측 방명록 관리
           </Button>
