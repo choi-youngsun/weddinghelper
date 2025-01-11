@@ -69,17 +69,51 @@ export default authenticate(async function handler(
   } else if (req.method === 'GET') {
     const userId = req.user.id;
 
+    const { side } = req.query; // 요청에서 side 값 가져오기
+
     try {
+      // userId로 사용자 데이터 조회
       const user = await UserData.findOne({ _id: userId }).select(
-        'name email brideSide groomSide'
-      ); // 사용자 정보 조회 (비밀번호 제외)   .select('name email brideSide groomSide');
+        'name email brideSide groomSide brideGuests groomGuests'
+      ); // 사용자 정보 조회 (비밀번호 제외)
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: 'User not found' });
+      }
+
+      let responseData: any = {};
+
+      if (side) {
+        const sides = Array.isArray(side) ? side : side.split(','); // 쿼리 파라미터에서 side가 배열인지 확인 후 처리
+        // 각 조건에 맞는 데이터 추가
+        sides.forEach((s) => {
+          if (s === 'bride') {
+            responseData.brideSide = user.brideSide;
+          } else if (s === 'groom') {
+            responseData.groomSide = user.groomSide;
+          } else if (s === 'brideGuests') {
+            responseData.brideGuests = user.brideGuests;
+          } else if (s === 'groomGuests') {
+            responseData.groomGuests = user.groomGuests;
+          }
+        });
+      }
+
+      // 만약 side가 없거나 잘못된 값이면 전체 데이터 반환
+      if (!Object.keys(responseData).length) {
+        responseData = user;
+      }
+
+      // 성공적으로 선택된 데이터 반환
       res.status(200).json({
+        success: true,
         message: '조회 성공!',
-        user: user,
+        user: responseData,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ success: false, message: 'Server error' });
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
