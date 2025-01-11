@@ -3,6 +3,7 @@ import { ExtendedNextApiRequest } from '@/api/authenticate';
 import authenticate from '@/api/authenticate';
 import OrderNumber from '@/db/models/orderNumber';
 import GroomGuest, { IGroomGuest } from '@/db/models/groomGuest';
+import UserData from '@/db/models/user';
 
 type ResponseData = {
   success: boolean;
@@ -70,6 +71,19 @@ export default authenticate(async function handler(
       // 새로운 orderNumber를 OrderNumber 모델에 저장
       orderEntry.lastOrderNumber = newOrderNumber;
       await orderEntry.save();
+      await newGuest.save();
+      // 사용자 조회
+      const user = await UserData.findById(userId);
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: 'User not found' });
+      }
+      user.groomGuests = user.groomGuests || [];
+      user.groomGuests.push(newGuest);
+
+      // 업데이트된 사용자 저장
+      await user.save();
 
       res.status(200).json({
         success: true,
@@ -78,7 +92,9 @@ export default authenticate(async function handler(
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Server error' });
+      res
+        .status(500)
+        .json({ success: false, message: `Server error: ${error}` });
     }
   } else if (req.method === 'GET') {
     const userId = req.user.id;

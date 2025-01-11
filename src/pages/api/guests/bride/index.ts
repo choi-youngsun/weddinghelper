@@ -92,7 +92,9 @@ export default authenticate(async function handler(
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Server error' });
+      res
+        .status(500)
+        .json({ success: false, message: `Server error: ${error}` });
     }
   } else if (req.method === 'GET') {
     const userId = req.user.id;
