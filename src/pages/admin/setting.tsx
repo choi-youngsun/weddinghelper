@@ -4,6 +4,7 @@ import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
 import { useUserAffiliationData } from '@/hooks/useUserData';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { useState } from 'react';
 
 export default function Setting() {
@@ -33,8 +34,12 @@ export default function Setting() {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (error) => {
-      setErrorMessage('이미 추가된 소속입니다.');
-      console.error('소속 수정 실패:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        }
+        console.error('소속 수정 실패:', error);
+      }
     },
   });
 
