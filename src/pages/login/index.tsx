@@ -3,6 +3,7 @@ import { postLogIn } from '@/api/auth/authAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,6 +18,7 @@ export default function Login() {
   });
 
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +48,17 @@ export default function Login() {
       // 로컬 스토리지에 유저 정보 저장
       localStorage.setItem('user', JSON.stringify(userData));
     },
+    onSettled: () => {
+      setIsLoading(false); // 요청 종료 후 로딩 상태 해제
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+        console.error('로그인 실패:', error);
+      }
+    },
   });
 
   useEffect(() => {
@@ -60,6 +73,8 @@ export default function Login() {
   }, [queryClient]); // 페이지가 처음 로드될 때 실행
 
   const handleSubmit = async () => {
+    setIsLoading(true); // 요청 시작 시 로딩 상태 활성화
+    setError(''); // 이전 오류 메시지 초기화
     try {
       await login({ email: formFields.email, password: formFields.password });
       setFormFields({ email: '', password: '' });
@@ -73,7 +88,7 @@ export default function Login() {
   };
 
   return (
-    <div className="mx-auto mb-[50px] flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
+    <div className="mx-auto flex w-full flex-col gap-[20px] px-[30px] md:w-[500px]">
       <div className="mx-auto mb-[30px] mt-[150px]  w-[250px] md:w-[400px]">
         <Image
           src="/icons/logo_large.png"
@@ -113,9 +128,9 @@ export default function Login() {
         onClick={handleSubmit}
         disabled={!isAllInputFilled()}
       >
-        로그인하기
+        {isLoading ? '로그인 중...' : '로그인하기'}
       </Button>
-      <p className="text-right text-sm-regular md:text-md-regular">
+      <p className="mb-[100px] text-right text-sm-regular md:text-md-regular">
         아직 회원이 아니신가요?{' '}
         <Link
           href={'/signup'}
