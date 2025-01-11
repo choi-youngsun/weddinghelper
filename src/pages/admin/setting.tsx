@@ -2,7 +2,7 @@ import { patchUserSetting } from '@/api/admin/settingAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
-import useUserData from '@/hooks/useUserData';
+import { useUserAffiliationData } from '@/hooks/useUserData';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -12,7 +12,7 @@ export default function Setting() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useUserData();
+  const { data, isLoading } = useUserAffiliationData();
 
   const { mutate: patchAffiliation } = useMutation({
     mutationFn: ({
