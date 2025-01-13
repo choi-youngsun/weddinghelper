@@ -2,8 +2,9 @@ import { patchUserSetting } from '@/api/admin/settingAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
-import useUserData from '@/hooks/useUserData';
+import { useUserAffiliationData } from '@/hooks/useUserData';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { useState } from 'react';
 
 export default function Setting() {
@@ -12,7 +13,7 @@ export default function Setting() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useUserData();
+  const { data, isLoading } = useUserAffiliationData();
 
   const { mutate: patchAffiliation } = useMutation({
     mutationFn: ({
@@ -33,8 +34,12 @@ export default function Setting() {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (error) => {
-      setErrorMessage('이미 추가된 소속입니다.');
-      console.error('소속 수정 실패:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        }
+        console.error('소속 수정 실패:', error);
+      }
     },
   });
 
@@ -132,7 +137,7 @@ export default function Setting() {
               <p className="ml-[10px] text-text-gray">Loading...</p>
             ) : selectedTag === 'bride' ? (
               // brideSide에 대한 조건 처리
-              data?.user.brideSide?.length ? (
+              data?.user?.brideSide?.length ? (
                 // brideSide가 있을 때
                 data.user.brideSide.map((option: string) => (
                   <Tag
@@ -148,7 +153,7 @@ export default function Setting() {
                 </p>
               )
             ) : // groomSide에 대한 조건 처리
-            data?.user.groomSide?.length ? (
+            data?.user?.groomSide?.length ? (
               // groomSide가 있을 때
               data.user.groomSide.map((option: string) => (
                 <Tag

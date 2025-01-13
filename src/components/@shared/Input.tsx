@@ -38,7 +38,7 @@ export default function Input({
     'w-full rounded-[16px] px-3',
     {
       'border border-border-gray': border === 'default',
-      'border border-button-red': errorMessage !== '',
+      'border border-button-red': !!errorMessage,
       'text-[16px]': textSize === '16',
       'text-[20px]': textSize === '20',
       'text-[24px]': textSize === '24',

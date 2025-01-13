@@ -40,16 +40,18 @@ export default async function login(
     const user = await UserData.findOne({ email });
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ success: false, message: 'Invalid email or password' });
+      return res.status(400).json({
+        success: false,
+        message: '이메일 또는 비밀번호를 확인해주세요.',
+      });
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ success: false, message: 'Invalid email or password' });
+      return res.status(400).json({
+        success: false,
+        message: '이메일 또는 비밀번호를 확인해주세요.',
+      });
     }
 
     // JWT 토큰 발급
