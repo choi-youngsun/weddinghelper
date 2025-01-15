@@ -1,31 +1,36 @@
 import { GuestInfo } from '@/components/admin/AdminGuestForm';
 import AdminGuestTable from '@/components/admin/AdminGuestTable';
-import { brideGuest } from '@/utils/guestLists';
+import { useBrideGuestData } from '@/hooks/useUserData';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function AdminBride() {
+  const { data, isLoading } = useBrideGuestData();
+  console.log(data);
+  const brideGuest = data?.user?.brideGuests;
   const [guests, setGuests] = useState<GuestInfo[]>(brideGuest); // 전체 리스트 관리
-  const [editModeId, setEditModeId] = useState<number | null>(null); // 수정 모드 상태
+  const [editModeId, setEditModeId] = useState<string | null>(null); // 수정 모드 상태
+  const queryClient = useQueryClient();
 
   const handleChange = (id: number, name: string, value: string | number) => {
     setGuests((prev) =>
       prev.map((guest) =>
-        guest.id === id ? { ...guest, [name]: value } : guest
+        guest.orderNumber === id ? { ...guest, [name]: value } : guest
       )
     );
   };
 
-  const handleEditClick = (id: number) => {
+  const handleEditClick = (id: string) => {
     if (editModeId === id) {
       // 저장 로직
-      console.log(guests.find((guest) => guest.id === id));
+      console.log(guests.find((guest) => guest._id === id));
       setEditModeId(null);
     } else {
       setEditModeId(id);
     }
   };
 
-  const handleDeleteClick = (id: number) => {
+  const handleDeleteClick = (id: string) => {
     console.log(id, '번째 하객 삭제!');
   };
 

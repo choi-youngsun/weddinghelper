@@ -4,9 +4,9 @@ type AdminGuestTableForm = {
   guestList: GuestInfo[];
   side: 'bride' | 'broom';
   onChange: (id: number, name: string, value: string | number) => void;
-  editModeId: number | null;
-  onEditClick: (id: number) => void;
-  onDeleteClick: (id: number) => void;
+  editModeId: string | null;
+  onEditClick: (id: string) => void;
+  onDeleteClick: (id: string) => void;
 };
 
 export default function AdminGuestTable({
@@ -45,12 +45,12 @@ export default function AdminGuestTable({
           </tr>
         </thead>
         <tbody>
-          {guestList.map((guest) => (
+          {guestList?.map((guest) => (
             <AdminGuestForm
               guest={guest}
               key={guest.orderNumber}
               side={side}
-              isEditMode={editModeId === guest.id}
+              isEditMode={editModeId === guest._id}
               onChange={onChange}
               onEditClick={onEditClick}
               onDeleteClick={onDeleteClick}

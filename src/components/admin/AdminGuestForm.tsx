@@ -4,12 +4,12 @@ import Input from '../@shared/Input';
 import ConfirmModal from './ConfirmModal';
 
 export type GuestInfo = {
-  id: number;
-  userId: number;
+  _id: string;
+  userId: string;
   orderNumber: number;
   side: string;
   guestName: string;
-  group: string;
+  affiliation: string;
   giftAmount: number | string;
   ticketCount: number | string;
   note: string;
@@ -20,8 +20,8 @@ type BrideAdminFormProps = {
   side?: 'bride' | 'broom';
   isEditMode: boolean;
   onChange: (id: number, name: string, value: string | number) => void;
-  onEditClick: (id: number) => void;
-  onDeleteClick: (id: number) => void;
+  onEditClick: (id: string) => void;
+  onDeleteClick: (id: string) => void;
 };
 
 export default function AdminGuestForm({
@@ -37,19 +37,23 @@ export default function AdminGuestForm({
   return (
     <tr key={guest.orderNumber} className="text-center">
       <td className="border-r border-black px-2 py-1">{guest.orderNumber}</td>
-      <td className="border-x border-black px-2 py-1">{guest.side}</td>
+      <td className="border-x border-black px-2 py-1">
+        {guest.side === 'bride' ? '신부측' : '신랑측'}
+      </td>
       <td className="border-x border-black px-2 py-1">
         {isEditMode ? (
           <Input
             name="group"
-            value={guest.group}
-            onChange={(e) => onChange(guest.id, e.target.name, e.target.value)}
+            value={guest.affiliation}
+            onChange={(e) =>
+              onChange(guest.orderNumber, e.target.name, e.target.value)
+            }
             placeholder="소속 입력"
             height={30}
             className="text-sm"
           />
         ) : (
-          guest.group
+          guest.affiliation
         )}
       </td>
       <td className="border-x border-black px-2 py-1">
@@ -57,7 +61,9 @@ export default function AdminGuestForm({
           <Input
             name="guestName"
             value={guest.guestName}
-            onChange={(e) => onChange(guest.id, e.target.name, e.target.value)}
+            onChange={(e) =>
+              onChange(guest.orderNumber, e.target.name, e.target.value)
+            }
             placeholder="이름 입력"
             height={30}
             className="text-sm"
@@ -71,7 +77,9 @@ export default function AdminGuestForm({
           <Input
             name="giftAmount"
             value={guest.giftAmount}
-            onChange={(e) => onChange(guest.id, e.target.name, e.target.value)}
+            onChange={(e) =>
+              onChange(guest.orderNumber, e.target.name, e.target.value)
+            }
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -85,7 +93,9 @@ export default function AdminGuestForm({
           <Input
             name="ticketCount"
             value={guest.ticketCount}
-            onChange={(e) => onChange(guest.id, e.target.name, e.target.value)}
+            onChange={(e) =>
+              onChange(guest.orderNumber, e.target.name, e.target.value)
+            }
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -99,7 +109,9 @@ export default function AdminGuestForm({
           <Input
             name="note"
             value={guest.note}
-            onChange={(e) => onChange(guest.id, e.target.name, e.target.value)}
+            onChange={(e) =>
+              onChange(guest.orderNumber, e.target.name, e.target.value)
+            }
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -113,7 +125,7 @@ export default function AdminGuestForm({
           buttonColor={side === 'bride' ? 'pink' : 'blue'}
           className="text-xs"
           buttonHeight={35}
-          onClick={() => onEditClick(guest.id)}
+          onClick={() => onEditClick(guest._id)}
         >
           {isEditMode ? '저장' : '수정'}
         </Button>
@@ -126,7 +138,7 @@ export default function AdminGuestForm({
           삭제
         </Button>
         <ConfirmModal
-          guestId={guest.id}
+          guestId={guest._id}
           guestName={guest.guestName}
           isOpen={isOpen}
           onClose={onClose}
