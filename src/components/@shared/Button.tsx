@@ -8,6 +8,7 @@ type ButtonProps = {
   textSize?: '16' | '20' | '24' | '16_bold' | '20_bold';
   textWeight?: 'regular' | 'bold';
   borderColor?: 'yellow' | 'gray' | 'none' | 'shadow';
+  type?: 'button' | 'submit' | 'reset';
   buttonHeight?: number;
   className?: string;
   children: React.ReactNode;
@@ -49,6 +50,7 @@ export default function Button({
   buttonColor = 'yellow',
   textColor = 'black',
   textSize = '16',
+  type = 'button',
   borderColor = 'none',
   className,
   style,
@@ -99,7 +101,7 @@ export default function Button({
 
   return (
     <button
-      type="button"
+      type={type}
       className={buttonClass}
       style={customStyle}
       disabled={disabled}

@@ -97,39 +97,42 @@ export default function Login() {
           height={300}
         />
       </div>
-      <div>
-        <p className="text-md-regular">이메일</p>
-        <Input
-          placeholder="이메일을 입력해주세요."
-          className="mt-[10px] text-md-regular"
-          name="email"
-          value={formFields.email}
-          onChange={handleChange}
-          errorMessage={error}
-        />
-      </div>
-      <div>
-        <p className="text-md-regular">비밀번호</p>
-        <Input
-          placeholder="비밀번호를 입력해주세요."
-          className="mt-[10px] text-md-regular"
-          type="password"
-          name="password"
-          value={formFields.password}
-          onChange={handleChange}
-          errorMessage={error}
-        />
-      </div>
-      <Button
-        textColor="white"
-        textSize="20_bold"
-        buttonHeight={60}
-        className="mt-[30px]"
-        onClick={handleSubmit}
-        disabled={!isAllInputFilled()}
-      >
-        {isLoading ? '로그인 중...' : '로그인하기'}
-      </Button>
+      <form className="flex flex-col gap-[20px]">
+        <div>
+          <p className="text-md-regular">이메일</p>
+          <Input
+            placeholder="이메일을 입력해주세요."
+            className="mt-[10px] text-md-regular"
+            name="email"
+            value={formFields.email}
+            onChange={handleChange}
+            errorMessage={error}
+          />
+        </div>
+        <div>
+          <p className="text-md-regular">비밀번호</p>
+          <Input
+            placeholder="비밀번호를 입력해주세요."
+            className="mt-[10px] text-md-regular"
+            type="password"
+            name="password"
+            value={formFields.password}
+            onChange={handleChange}
+            errorMessage={error}
+          />
+        </div>
+        <Button
+          textColor="white"
+          textSize="20_bold"
+          buttonHeight={60}
+          className="mt-[30px]"
+          onClick={handleSubmit}
+          disabled={!isAllInputFilled()}
+          type="submit"
+        >
+          {isLoading ? '로그인 중...' : '로그인하기'}
+        </Button>
+      </form>
       <p className="mb-[100px] text-right text-sm-regular md:text-md-regular">
         아직 회원이 아니신가요?{' '}
         <Link
