@@ -3,7 +3,7 @@ import AdminGuestForm, { GuestInfo } from './AdminGuestForm';
 type AdminGuestTableForm = {
   guestList: GuestInfo[];
   side: 'bride' | 'broom';
-  onChange: (id: number, name: string, value: string | number) => void;
+  onChange: (id: string, name: string, value: string | number) => void;
   editModeId: string | null;
   onEditClick: (id: string) => void;
   onDeleteClick: (id: string) => void;

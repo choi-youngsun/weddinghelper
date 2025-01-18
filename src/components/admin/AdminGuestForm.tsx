@@ -10,8 +10,8 @@ export type GuestInfo = {
   side: string;
   guestName: string;
   affiliation: string;
-  giftAmount: number | string;
-  ticketCount: number | string;
+  giftAmount: number | null;
+  ticketCount: string | null;
   note: string;
 };
 
@@ -19,7 +19,7 @@ type BrideAdminFormProps = {
   guest: GuestInfo;
   side?: 'bride' | 'broom';
   isEditMode: boolean;
-  onChange: (id: number, name: string, value: string | number) => void;
+  onChange: (id: string, name: string, value: string | number) => void;
   onEditClick: (id: string) => void;
   onDeleteClick: (id: string) => void;
 };
@@ -45,9 +45,7 @@ export default function AdminGuestForm({
           <Input
             name="group"
             value={guest.affiliation}
-            onChange={(e) =>
-              onChange(guest.orderNumber, e.target.name, e.target.value)
-            }
+            onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="소속 입력"
             height={30}
             className="text-sm"
@@ -61,9 +59,7 @@ export default function AdminGuestForm({
           <Input
             name="guestName"
             value={guest.guestName}
-            onChange={(e) =>
-              onChange(guest.orderNumber, e.target.name, e.target.value)
-            }
+            onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="이름 입력"
             height={30}
             className="text-sm"
@@ -76,10 +72,8 @@ export default function AdminGuestForm({
         {isEditMode ? (
           <Input
             name="giftAmount"
-            value={guest.giftAmount}
-            onChange={(e) =>
-              onChange(guest.orderNumber, e.target.name, e.target.value)
-            }
+            value={guest.giftAmount ?? ''}
+            onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -92,10 +86,8 @@ export default function AdminGuestForm({
         {isEditMode ? (
           <Input
             name="ticketCount"
-            value={guest.ticketCount}
-            onChange={(e) =>
-              onChange(guest.orderNumber, e.target.name, e.target.value)
-            }
+            value={guest.ticketCount ?? ''}
+            onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -109,9 +101,7 @@ export default function AdminGuestForm({
           <Input
             name="note"
             value={guest.note}
-            onChange={(e) =>
-              onChange(guest.orderNumber, e.target.name, e.target.value)
-            }
+            onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="입력"
             height={30}
             className="text-sm"
