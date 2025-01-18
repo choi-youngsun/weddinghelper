@@ -1,4 +1,8 @@
-import { Guest, patchBrideGuestInfo } from '@/api/guest/guestAPI';
+import {
+  deleteBrideGuestInfo,
+  Guest,
+  patchBrideGuestInfo,
+} from '@/api/guest/guestAPI';
 import { GuestInfo } from '@/components/admin/AdminGuestForm';
 import AdminGuestTable from '@/components/admin/AdminGuestTable';
 import { useBrideGuestData } from '@/hooks/useUserData';
@@ -40,7 +44,22 @@ export default function AdminBride() {
       queryClient.invalidateQueries({ queryKey: ['brideGuest'] });
     },
     onError: (error) => {
-      console.error('소속 수정 실패:', error);
+      console.error('하객 삭제 실패:', error);
+    },
+  });
+
+  const { mutate: deleteBrideGuestData } = useMutation({
+    mutationFn: (guestId: string) => deleteBrideGuestInfo(guestId),
+    onSuccess: (data) => {
+      console.log('하객 정보 삭제 성공:', data);
+      setEditModeId(null);
+    },
+    onSettled: () => {
+      // 쿼리 무효화 및 리패치
+      queryClient.invalidateQueries({ queryKey: ['brideGuest'] });
+    },
+    onError: (error) => {
+      console.error('삭제 실패:', error);
     },
   });
 
@@ -73,6 +92,7 @@ export default function AdminBride() {
   };
 
   const handleDeleteClick = (id: string) => {
+    deleteBrideGuestData(id);
     console.log(id, '번째 하객 삭제!');
   };
 
