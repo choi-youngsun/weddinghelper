@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 
 export default function AdminBride() {
   const { data, isLoading } = useBrideGuestData();
-  console.log(data);
   const brideGuest = data?.user?.brideGuests || [];
   const [guests, setGuests] = useState<GuestInfo[]>([]); // 전체 리스트 관리
   const [editModeId, setEditModeId] = useState<string | null>(null); // 수정 모드 상태
