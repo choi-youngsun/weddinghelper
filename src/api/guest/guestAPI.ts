@@ -27,8 +27,20 @@ export const patchBrideGuestInfo = async (guestId: string, guest: Guest) => {
   return response.data;
 };
 
+// 신랑측 하객 정보를 수정하는 함수
+export const patchGroomGuestInfo = async (guestId: string, guest: Guest) => {
+  const response = await axiosInstance.patch(`guests/groom/${guestId}`, guest);
+  return response.data;
+};
+
 // 신부측 하객 정보를 수정하는 함수
 export const deleteBrideGuestInfo = async (guestId: string) => {
   const response = await axiosInstance.delete(`guests/bride/${guestId}`);
+  return response.data;
+};
+
+// 신랑측 하객 정보를 수정하는 함수
+export const deleteGroomGuestInfo = async (guestId: string) => {
+  const response = await axiosInstance.delete(`guests/groom/${guestId}`);
   return response.data;
 };
