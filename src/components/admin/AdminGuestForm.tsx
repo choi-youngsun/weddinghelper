@@ -17,7 +17,7 @@ export type GuestInfo = {
 
 type BrideAdminFormProps = {
   guest: GuestInfo;
-  side?: 'bride' | 'broom';
+  side?: 'bride' | 'groom';
   isEditMode: boolean;
   onChange: (id: string, name: string, value: string | number) => void;
   onEditClick: (id: string) => void;

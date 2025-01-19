@@ -2,7 +2,7 @@ import AdminGuestForm, { GuestInfo } from './AdminGuestForm';
 
 type AdminGuestTableForm = {
   guestList: GuestInfo[];
-  side: 'bride' | 'broom';
+  side: 'bride' | 'groom';
   onChange: (id: string, name: string, value: string | number) => void;
   editModeId: string | null;
   onEditClick: (id: string) => void;
@@ -56,6 +56,16 @@ export default function AdminGuestTable({
               onDeleteClick={onDeleteClick}
             />
           ))}
+          {guestList.length === 0 && (
+            <tr>
+              <td colSpan={8} className=" px-2 py-1 text-center">
+                <br />
+                <br />
+                <br />
+                아직 등록된 하객이 없어요!
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </section>
