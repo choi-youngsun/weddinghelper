@@ -3,6 +3,7 @@ import {
   Guest,
   patchGroomGuestInfo,
 } from '@/api/guest/guestAPI';
+import Loading from '@/components/@shared/Loading';
 import { GuestInfo } from '@/components/admin/AdminGuestForm';
 import AdminGuestTable from '@/components/admin/AdminGuestTable';
 import { useGroomGuestData } from '@/hooks/useUserData';
@@ -10,7 +11,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 export default function AdminGroom() {
-  const { data, isLoading } = useGroomGuestData();
+  const { data, isLoading, isError } = useGroomGuestData();
   const groomGuest = data?.user?.groomGuests || [];
   const [guests, setGuests] = useState<GuestInfo[]>([]); // 전체 리스트 관리
   const [editModeId, setEditModeId] = useState<string | null>(null); // 수정 모드 상태
@@ -98,14 +99,26 @@ export default function AdminGroom() {
   return (
     <div className="mx-auto mb-[100px] px-[20px] py-[80px] xl:w-[1280px]">
       <p className="mb-[20px] text-md-regular">신랑측 관리자 페이지</p>
-      <AdminGuestTable
-        guestList={guests}
-        editModeId={editModeId}
-        side="groom"
-        onChange={handleChange}
-        onEditClick={handleEditClick}
-        onDeleteClick={handleDeleteClick}
-      />
+      {isLoading ? (
+        <div className="absolute inset-0 z-50 flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <Loading />
+          </div>
+        </div>
+      ) : isError ? (
+        <div className="text-center text-red-500">
+          하객 정보를 불러오는 중 문제가 발생했습니다.
+        </div>
+      ) : (
+        <AdminGuestTable
+          guestList={guests}
+          editModeId={editModeId}
+          side="groom"
+          onChange={handleChange}
+          onEditClick={handleEditClick}
+          onDeleteClick={handleDeleteClick}
+        />
+      )}
     </div>
   );
 }
