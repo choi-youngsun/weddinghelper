@@ -36,11 +36,13 @@ export default function AdminGuestForm({
 
   return (
     <tr key={guest.orderNumber} className="text-center">
-      <td className="border-r border-black px-2 py-1">{guest.orderNumber}</td>
-      <td className="border-x border-black px-2 py-1">
+      <td className="border-r border-[#686868] px-2 py-1">
+        {guest.orderNumber}
+      </td>
+      <td className="border-x border-[#686868] px-2 py-1">
         {guest.side === 'bride' ? '신부측' : '신랑측'}
       </td>
-      <td className="border-x border-black px-2 py-1">
+      <td className="border-x border-[#686868] px-2 py-1">
         {isEditMode ? (
           <Input
             name="group"
@@ -54,7 +56,7 @@ export default function AdminGuestForm({
           guest.affiliation
         )}
       </td>
-      <td className="border-x border-black px-2 py-1">
+      <td className="border-xborder-[#686868] px-2 py-1">
         {isEditMode ? (
           <Input
             name="guestName"
@@ -68,7 +70,7 @@ export default function AdminGuestForm({
           guest.guestName
         )}
       </td>
-      <td className="border-x border-black px-2 py-1">
+      <td className="border-x border-[#686868] px-2 py-1">
         {isEditMode ? (
           <Input
             name="giftAmount"
@@ -82,7 +84,7 @@ export default function AdminGuestForm({
           guest.giftAmount
         )}
       </td>
-      <td className="border-x border-black px-2 py-1">
+      <td className="border-x border-[#686868] px-2 py-1">
         {isEditMode ? (
           <Input
             name="ticketCount"
@@ -96,7 +98,7 @@ export default function AdminGuestForm({
           guest.ticketCount
         )}
       </td>
-      <td className="border-x border-black px-2 py-1">
+      <td className="border-x border-[#686868] px-2 py-1">
         {isEditMode ? (
           <Input
             name="note"
