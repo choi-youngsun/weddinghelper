@@ -14,9 +14,9 @@
 
 종이 방명록 관리하고 정리하기 어려우셨나요? <br>
 웨딩헬퍼와 함께 편리하고 똑똑하게 관리해보세요!
+
 - - -
-<br>
-<br>
+
 <div>
   
 <h3>배포 사이트</h3>
@@ -42,6 +42,7 @@
 ![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
 <br/>
+
 - - -
 
 <br>
@@ -63,6 +64,7 @@
 <br>
 
 <div>
+  
 - - -
   
 **하객 정보 등록**
