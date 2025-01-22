@@ -35,19 +35,28 @@ export default function AdminGuestForm({
   const { isOpen, onClose, onOpen } = useModal();
 
   return (
-    <tr key={guest.orderNumber} className="text-center">
-      <td className=" border-[#686868] bg-[#ffffff74] px-2 py-1">
+    <tr
+      key={guest.orderNumber}
+      className="border-b border-[#45454511] text-center"
+    >
+      <td className="break-words bg-[#ffffff74] px-2 py-1">
         {guest.orderNumber}
       </td>
-      <td className=" px-2 py-1">
+      <td className="break-words px-2 py-1">
         {guest.side === 'bride' ? '신부측' : '신랑측'}
       </td>
-      <td className="   bg-[#ffffff74] px-2 py-1">
+      <td className="break-words bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
-            name="group"
+            name="affiliation"
             value={guest.affiliation}
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                onEditClick(guest._id);
+              }
+            }}
             placeholder="소속 입력"
             height={30}
             className="text-sm"
@@ -56,12 +65,18 @@ export default function AdminGuestForm({
           guest.affiliation
         )}
       </td>
-      <td className=" px-2 py-1">
+      <td className="break-words px-2 py-1 ">
         {isEditMode ? (
           <Input
             name="guestName"
             value={guest.guestName}
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                onEditClick(guest._id);
+              }
+            }}
             placeholder="이름 입력"
             height={30}
             className="text-sm"
@@ -70,13 +85,19 @@ export default function AdminGuestForm({
           guest.guestName
         )}
       </td>
-      <td className="   bg-[#ffffff74] px-2 py-1">
+      <td className="break-words bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
             name="giftAmount"
             value={guest.giftAmount ?? ''}
             type="number"
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                onEditClick(guest._id);
+              }
+            }}
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -85,13 +106,19 @@ export default function AdminGuestForm({
           guest.giftAmount
         )}
       </td>
-      <td className=" px-2 py-1">
+      <td className="break-words px-2 py-1">
         {isEditMode ? (
           <Input
             name="ticketCount"
             value={guest.ticketCount ?? ''}
             type="number"
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                onEditClick(guest._id);
+              }
+            }}
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -100,12 +127,18 @@ export default function AdminGuestForm({
           guest.ticketCount
         )}
       </td>
-      <td className="  bg-[#ffffff74] px-2 py-1">
+      <td className="break-words  bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
             name="note"
             value={guest.note}
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                onEditClick(guest._id);
+              }
+            }}
             placeholder="입력"
             height={30}
             className="text-sm"
@@ -114,30 +147,32 @@ export default function AdminGuestForm({
           guest.note
         )}
       </td>
-      <td className="flex gap-1 px-2 py-1">
-        <Button
-          buttonColor={side === 'bride' ? 'pink' : 'blue'}
-          className="text-xs"
-          buttonHeight={35}
-          onClick={() => onEditClick(guest._id)}
-        >
-          {isEditMode ? '저장' : '수정'}
-        </Button>
-        <Button
-          buttonColor={side === 'bride' ? 'pink' : 'blue'}
-          className="text-xs"
-          buttonHeight={35}
-          onClick={onOpen}
-        >
-          삭제
-        </Button>
-        <ConfirmModal
-          guestId={guest._id}
-          guestName={guest.guestName}
-          isOpen={isOpen}
-          onClose={onClose}
-          onDelete={onDeleteClick}
-        />
+      <td className="px-2 py-1 align-middle">
+        <div className="flex justify-center gap-1">
+          <Button
+            buttonColor={side === 'bride' ? 'pink' : 'blue'}
+            className="text-xs"
+            buttonHeight={35}
+            onClick={() => onEditClick(guest._id)}
+          >
+            {isEditMode ? '저장' : '수정'}
+          </Button>
+          <Button
+            buttonColor={side === 'bride' ? 'pink' : 'blue'}
+            className="text-xs"
+            buttonHeight={35}
+            onClick={onOpen}
+          >
+            삭제
+          </Button>
+          <ConfirmModal
+            guestId={guest._id}
+            guestName={guest.guestName}
+            isOpen={isOpen}
+            onClose={onClose}
+            onDelete={onDeleteClick}
+          />
+        </div>
       </td>
     </tr>
   );
