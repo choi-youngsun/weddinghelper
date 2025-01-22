@@ -56,6 +56,8 @@
 
 <br>
 
+**소속 정보 등록**
+
 ![소속 정보 등록](https://github.com/user-attachments/assets/33ddb0aa-8626-4816-bd6b-eef4909b350b)
 
 <p>정보 수정에 들어가면 신랑, 신부측 소속 정보를 수정할 수 있습니다.<p>
@@ -66,6 +68,8 @@
 <br>
 
 <div>
+
+**하객 정보 등록**
   
 ![하객 정보 등록](https://github.com/user-attachments/assets/f4dfd2db-dfdd-4c9e-8cde-019700c193d7)
 
@@ -77,6 +81,8 @@
 <br>
 <br>
 
+**하객 정보 취합**
+
 ![하객 정보 취합](https://github.com/user-attachments/assets/efc42a98-18c7-4d3f-85e7-cc3385e4c417)
 
 
@@ -86,6 +92,8 @@
 <br>
 <br>
 <br>
+
+**넘버링 기능능**
 
 ![넘버링 기능](https://github.com/user-attachments/assets/e70ddd36-257d-4bbf-aba4-e31142328a46)
 
