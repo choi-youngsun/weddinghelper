@@ -36,13 +36,13 @@ export default function AdminGuestForm({
 
   return (
     <tr key={guest.orderNumber} className="text-center">
-      <td className="border-r border-[#686868] px-2 py-1">
+      <td className=" border-[#686868] bg-[#ffffff74] px-2 py-1">
         {guest.orderNumber}
       </td>
-      <td className="border-x border-[#686868] px-2 py-1">
+      <td className=" px-2 py-1">
         {guest.side === 'bride' ? '신부측' : '신랑측'}
       </td>
-      <td className="border-x border-[#686868] px-2 py-1">
+      <td className="   bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
             name="group"
@@ -56,7 +56,7 @@ export default function AdminGuestForm({
           guest.affiliation
         )}
       </td>
-      <td className="border-xborder-[#686868] px-2 py-1">
+      <td className=" px-2 py-1">
         {isEditMode ? (
           <Input
             name="guestName"
@@ -70,11 +70,12 @@ export default function AdminGuestForm({
           guest.guestName
         )}
       </td>
-      <td className="border-x border-[#686868] px-2 py-1">
+      <td className="   bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
             name="giftAmount"
             value={guest.giftAmount ?? ''}
+            type="number"
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="입력"
             height={30}
@@ -84,11 +85,12 @@ export default function AdminGuestForm({
           guest.giftAmount
         )}
       </td>
-      <td className="border-x border-[#686868] px-2 py-1">
+      <td className=" px-2 py-1">
         {isEditMode ? (
           <Input
             name="ticketCount"
             value={guest.ticketCount ?? ''}
+            type="number"
             onChange={(e) => onChange(guest._id, e.target.name, e.target.value)}
             placeholder="입력"
             height={30}
@@ -98,7 +100,7 @@ export default function AdminGuestForm({
           guest.ticketCount
         )}
       </td>
-      <td className="border-x border-[#686868] px-2 py-1">
+      <td className="  bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
             name="note"
