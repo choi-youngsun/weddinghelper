@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { brideGuestSchema, IBrideGuest } from './brideGuest';
+import { groomGuestSchema, IGroomGuest } from './groomGuest';
 
 interface IUser {
   userId: mongoose.Schema.Types.ObjectId;
@@ -7,6 +9,8 @@ interface IUser {
   password: string;
   brideSide: string[];
   groomSide: string[];
+  brideGuests: IBrideGuest[];
+  groomGuests: IGroomGuest[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -23,6 +27,8 @@ const userSchema = new mongoose.Schema<IUser>(
     password: { type: String, required: true }, // 필수
     brideSide: { type: [String], default: [] }, // 신부측 소속 정보
     groomSide: { type: [String], default: [] }, // 신랑측 소속 정보
+    brideGuests: { type: [brideGuestSchema], default: [] },
+    groomGuests: { type: [groomGuestSchema], default: [] },
   },
   { timestamps: true }
 );

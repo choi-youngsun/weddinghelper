@@ -1,7 +1,9 @@
 import axiosInstance from '../axiosInstance';
 
-export const getUserSetting = async () => {
-  const response = await axiosInstance.get('users/setting');
+export const getUserSetting = async (side?: string[]) => {
+  const response = await axiosInstance.get('users/setting', {
+    params: side ? { side: side.join(',') } : undefined,
+  });
   return response.data;
 };
 

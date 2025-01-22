@@ -2,8 +2,9 @@ import { patchUserSetting } from '@/api/admin/settingAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
-import useUserData from '@/hooks/useUserData';
+import { useUserAffiliationData } from '@/hooks/useUserData';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { useState } from 'react';
 
 export default function Setting() {
@@ -12,7 +13,7 @@ export default function Setting() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useUserData();
+  const { data, isLoading } = useUserAffiliationData();
 
   const { mutate: patchAffiliation } = useMutation({
     mutationFn: ({
@@ -30,11 +31,15 @@ export default function Setting() {
     },
     onSettled: () => {
       // 쿼리 무효화 및 리패치
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: ['user', 'affiliation'] });
     },
     onError: (error) => {
-      setErrorMessage('이미 추가된 소속입니다.');
-      console.error('소속 수정 실패:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        }
+        console.error('소속 수정 실패:', error);
+      }
     },
   });
 
@@ -48,7 +53,8 @@ export default function Setting() {
     }
   };
 
-  const handleTagSubmit = (selectedTag: string, tagValue: string) => {
+  const handleTagSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // 페이지 새로고침 방지
     if (selectedTag === 'bride') {
       patchAffiliation({
         side: 'brideSide',
@@ -109,7 +115,10 @@ export default function Setting() {
           </Button>
         </div>
         <div className="flex h-[400px] flex-grow flex-col rounded-br-[16px] rounded-tr-[16px] border-2 border-button-yellow bg-white px-[10px] py-[20px]">
-          <div className="flex w-full items-center gap-2">
+          <form
+            onSubmit={handleTagSubmit}
+            className="flex w-full items-center gap-2"
+          >
             <Input
               className="flex-grow text-md-regular"
               height={50}
@@ -121,18 +130,18 @@ export default function Setting() {
             <Button
               buttonWidth="fitToChildren"
               className="shrink-0 px-[20px]"
-              onClick={() => handleTagSubmit(selectedTag, tagValue)}
+              type="submit"
               disabled={tagValue === '' || errorMessage !== ''}
             >
               추가
             </Button>
-          </div>
+          </form>
           <div className="mt-[20px] flex flex-wrap gap-3">
             {isLoading ? (
               <p className="ml-[10px] text-text-gray">Loading...</p>
             ) : selectedTag === 'bride' ? (
               // brideSide에 대한 조건 처리
-              data?.user.brideSide?.length ? (
+              data?.user?.brideSide?.length ? (
                 // brideSide가 있을 때
                 data.user.brideSide.map((option: string) => (
                   <Tag
@@ -148,7 +157,7 @@ export default function Setting() {
                 </p>
               )
             ) : // groomSide에 대한 조건 처리
-            data?.user.groomSide?.length ? (
+            data?.user?.groomSide?.length ? (
               // groomSide가 있을 때
               data.user.groomSide.map((option: string) => (
                 <Tag

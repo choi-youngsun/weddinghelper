@@ -17,6 +17,7 @@ type GuestFormProps = {
   onSubmit: () => void;
   isOpen: boolean;
   onClose: () => void;
+  error: string | null;
 };
 
 export default function GuestForm({
@@ -31,6 +32,7 @@ export default function GuestForm({
   onSubmit,
   isOpen,
   onClose,
+  error,
 }: GuestFormProps) {
   const radioOption = [
     { label: '0', value: '0' },
@@ -45,7 +47,9 @@ export default function GuestForm({
     return (
       nameValue !== '' &&
       selectedGroupOption !== null &&
-      selectedTicketOption !== null
+      selectedTicketOption !== null &&
+      selectedGroupOption.value !== '등록' && // '등록' 옵션 선택 시 제출 비활성화
+      !error
     );
   };
 
@@ -62,6 +66,7 @@ export default function GuestForm({
             name="name"
             value={nameValue}
             onChange={onNameChange}
+            errorMessage={error}
           />
         </div>
         <div>
@@ -72,6 +77,7 @@ export default function GuestForm({
             selectedOption={selectedGroupOption}
             handleSelect={handleGroupSelect}
           />
+          {/*소속이 없을 때 어떤 화면 보여줄지 처리*/}
         </div>
         <div>
           <p className="mb-[20px] text-md-regular">식권</p>

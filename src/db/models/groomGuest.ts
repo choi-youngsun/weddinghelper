@@ -14,7 +14,7 @@ export interface IGroomGuest extends Document {
   updatedAt?: Date;
 }
 
-const groomGuestSchema = new mongoose.Schema(
+export const groomGuestSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
