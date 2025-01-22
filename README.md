@@ -18,9 +18,9 @@
 - - -
   
 
-<div align="right">
+<div>
 <h3>배포 사이트</h3>
-[WeddingHelper](https://weddinghelper.vercel.app/)🔗
+[WeddingHelper](https://weddinghelper.vercel.app/) 🔗
 </div>
 
 
@@ -30,7 +30,7 @@
 
 
 
-## ![타이틀 아이콘](https://github.com/user-attachments/assets/cfce5fa2-f2be-4b56-92ee-41563e64c22a) <span>기술 스택</span>
+##기술 스택
 ![html5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=black) 
 ![css3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=black) 
 ![next](https://img.shields.io/badge/Next.js-ffffff?style=for-the-badge&logo=next.js&logoColor=black) 
@@ -44,18 +44,14 @@
 <br>
 <br>
 
-## ![타이틀 아이콘](https://github.com/user-attachments/assets/cfce5fa2-f2be-4b56-92ee-41563e64c22a) 프로젝트 소개
+##프로젝트 소개
 
 <br>
 
-![소속 정보 등록](https://github.com/user-attachments/assets/33ddb0aa-8626-4816-bd6b-eef4909b350b)
+[소속 정보 등록](https://github.com/user-attachments/assets/33ddb0aa-8626-4816-bd6b-eef4909b350b)
 
+<p align="center">정보 수정에 들어가면 신랑, 신부측 소속 정보를 수정할 수 있습니다.<p>
 
-<table align="center">
-<tr>
-<td  align="center">정보 수정에 들어가면 신랑, 신부측 소속 정보를 수정할 수 있습니다.
-</tr>
-</table>
 
 <br>
 <br>
@@ -65,11 +61,9 @@
   
 ![하객 정보 등록](https://github.com/user-attachments/assets/f4dfd2db-dfdd-4c9e-8cde-019700c193d7)
 
-<table align="center">
-<tr>
-<td  align="center">신랑측, 신부측 하객을 각각 등록할 수 있습니다.
-</tr>
-</table>
+
+<p align="center">신랑측, 신부측 하객을 각각 등록할 수 있습니다.</p>
+
 
 <br>
 <br>
@@ -78,11 +72,8 @@
 ![하객 정보 취합](https://github.com/user-attachments/assets/efc42a98-18c7-4d3f-85e7-cc3385e4c417)
 
 
-<table align="center">
-<tr>
-<td  align="center">관리자 메뉴의 하객 정보 관리 섹션에 들어가면 등록된 하객 목록을 볼 수 있습니다. <br>상단 바의 메뉴에서 관리자 페이지로 바로 이동 가능합니다.</td>
-</tr>
-</table>
+<p align="center">관리자 메뉴의 하객 정보 관리 섹션에 들어가면 등록된 하객 목록을 볼 수 있습니다. <br>상단 바의 메뉴에서 관리자 페이지로 바로 이동 가능합니다.</p>
+
 
 <br>
 <br>
@@ -90,12 +81,8 @@
 
 ![넘버링 기능](https://github.com/user-attachments/assets/e70ddd36-257d-4bbf-aba4-e31142328a46)
 
+<p align="center">해당 번호는 삭제해도 바뀌지 않습니다. <br>축의금 봉투 등에 기록해서 정보 취합에 이용하세요!</p>
 
-<table align="center">
-<tr>
-<td  align="center">해당 번호는 삭제해도 바뀌지 않습니다. <br>축의금 봉투 등에 기록해서 정보 취합에 이용하세요!</td>
-</tr>
-</table>
 
 <br>
 <br>
