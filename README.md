@@ -12,7 +12,6 @@
 
 <br>
 
-**결혼식 방명록 관리 사이트** <br>
 종이 방명록 관리하고 정리하기 어려우셨나요? <br>
 웨딩헬퍼와 함께 편리하고 똑똑하게 관리해보세요!
 - - -
@@ -36,11 +35,14 @@
 ![css3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=black) 
 ![next](https://img.shields.io/badge/Next.js-ffffff?style=for-the-badge&logo=next.js&logoColor=black) 
 ![ts](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) 
-![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javaScript&logoColor=black) 
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javaScript&logoColor=black)
+<br/>
 ![tanstackquery](https://img.shields.io/badge/tanstackquery-20232A?style=for-the-badge&logo=tanstackquery&logoColor=white) 
-![eslint](https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white) 
 ![tailwindCss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![figma](https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black)
+![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+<br/>
+
 
 <br>
 <br>
