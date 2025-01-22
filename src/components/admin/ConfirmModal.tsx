@@ -2,11 +2,11 @@ import Button from '../@shared/Button';
 import Modal from '../@shared/Modal';
 
 type ConfirmModalProps = {
-  guestId: number;
+  guestId: string;
   guestName: string;
   isOpen: boolean;
   onClose: () => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 };
 
 export default function ConfirmModal({

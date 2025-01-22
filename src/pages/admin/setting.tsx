@@ -31,7 +31,7 @@ export default function Setting() {
     },
     onSettled: () => {
       // 쿼리 무효화 및 리패치
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: ['user', 'affiliation'] });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -53,7 +53,8 @@ export default function Setting() {
     }
   };
 
-  const handleTagSubmit = (selectedTag: string, tagValue: string) => {
+  const handleTagSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // 페이지 새로고침 방지
     if (selectedTag === 'bride') {
       patchAffiliation({
         side: 'brideSide',
@@ -114,7 +115,10 @@ export default function Setting() {
           </Button>
         </div>
         <div className="flex h-[400px] flex-grow flex-col rounded-br-[16px] rounded-tr-[16px] border-2 border-button-yellow bg-white px-[10px] py-[20px]">
-          <div className="flex w-full items-center gap-2">
+          <form
+            onSubmit={handleTagSubmit}
+            className="flex w-full items-center gap-2"
+          >
             <Input
               className="flex-grow text-md-regular"
               height={50}
@@ -126,12 +130,12 @@ export default function Setting() {
             <Button
               buttonWidth="fitToChildren"
               className="shrink-0 px-[20px]"
-              onClick={() => handleTagSubmit(selectedTag, tagValue)}
+              type="submit"
               disabled={tagValue === '' || errorMessage !== ''}
             >
               추가
             </Button>
-          </div>
+          </form>
           <div className="mt-[20px] flex flex-wrap gap-3">
             {isLoading ? (
               <p className="ml-[10px] text-text-gray">Loading...</p>

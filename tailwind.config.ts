@@ -5,6 +5,9 @@ export default {
 
   theme: {
     extend: {
+      fontFamily: {
+        serif: ['Gowun Batang', 'serif'],
+      },
       animation: {
         fadeInOut: 'fadeInOut 1s ease-in-out infinite',
       },
