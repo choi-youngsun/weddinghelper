@@ -15,11 +15,14 @@
 종이 방명록 관리하고 정리하기 어려우셨나요? <br>
 웨딩헬퍼와 함께 편리하고 똑똑하게 관리해보세요!
 - - -
-  <br>
+<br>
 <br>
 <div>
+  
 <h3>배포 사이트</h3>
-[WeddingHelper](https://weddinghelper.vercel.app/) 🔗
+
+[WeddingHelper](https://weddinghelper.vercel.app/)🔗
+
 </div>
 
 
@@ -30,7 +33,8 @@
 
 
 <h3>기술 스택</h3>
-<br>
+<br/>
+
 ![html5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=black) 
 ![css3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=black) 
 ![next](https://img.shields.io/badge/Next.js-ffffff?style=for-the-badge&logo=next.js&logoColor=black) 
@@ -41,6 +45,7 @@
 ![tailwindCss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![figma](https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black)
 ![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+
 <br/>
 
 
