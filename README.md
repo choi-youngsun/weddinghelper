@@ -1,29 +1,107 @@
 # WeddingHelper
-https://weddinghelper.vercel.app/images/thumbnail.png
-**[WeddingHelper](https://weddinghelper.vercel.app/)**는 결혼식 하객 정보를 손쉽게 관리할 수 있는 웹 애플리케이션입니다. 신랑측과 신부측 하객 정보를 등록하고, 이를 취합하고, 관리할 수 있는 기능을 제공합니다. 또한 하객 정보를 엑셀 파일로 내보내는 기능을 지원합니다.
 
-## 주요 기능
+<br>
 
-### 1. 하객 정보 등록
-하객 정보를 쉽게 등록하고 관리할 수 있습니다. 하객의 이름, 소속 등을 추가할 수 있습니다.
+<div>
+  
 
-![하객 정보 등록](gif-placeholder.gif)  
-*예시: 하객 정보 등록 화면*
+![썸네일](https://github.com/user-attachments/assets/0262d6e8-5831-4b05-91e6-0fabe5a3e1e2)
 
-### 2. 하객 정보 취합
-등록된 하객 정보를 취합하여 한 눈에 확인할 수 있습니다. 전체 하객 리스트를 한 번에 볼 수 있어 관리가 용이합니다.
 
-![하객 정보 취합](gif-placeholder.gif)  
-*예시: 하객 정보 취합 화면*
+</div>
 
-### 3. 소속 정보 추가/삭제
-하객의 소속(신랑측, 신부측)을 추가하거나 삭제할 수 있습니다. 소속 정보를 관리하여 하객 리스트를 그룹별로 쉽게 구분할 수 있습니다.
+<br>
 
-![소속 정보 추가/삭제](gif-placeholder.gif)  
-*예시: 소속 정보 추가/삭제 화면*
+종이 방명록 관리하고 정리하기 어려우셨나요? <br>
+웨딩헬퍼와 함께 편리하고 똑똑하게 관리해보세요!
 
-### 4. 엑셀로 내보내기
-하객 정보를 엑셀 파일로 내보내어 오프라인으로 저장하거나, 결혼식 준비 시 참고할 수 있습니다.
+- - -
 
-![엑셀로 내보내기](gif-placeholder.gif)  
-*예시: 엑셀 내보내기 화면*
+<div>
+  
+<h3>배포 사이트</h3>
+
+[WeddingHelper](https://weddinghelper.vercel.app/)🔗
+
+</div>
+
+- - -
+
+<h3>기술 스택</h3>
+<br/>
+
+![html5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=black) 
+![css3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=black) 
+![next](https://img.shields.io/badge/Next.js-ffffff?style=for-the-badge&logo=next.js&logoColor=black) 
+![ts](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) 
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javaScript&logoColor=black)
+<br/>
+![tanstackquery](https://img.shields.io/badge/tanstackquery-20232A?style=for-the-badge&logo=tanstackquery&logoColor=white) 
+![tailwindCss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![figma](https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black)
+![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+
+<br/>
+
+- - -
+
+<br>
+<br>
+
+<h3>프로젝트 소개</h3>
+
+<br>
+
+**소속 정보 등록**
+
+![소속 정보 등록](https://github.com/user-attachments/assets/33ddb0aa-8626-4816-bd6b-eef4909b350b)
+
+<p>정보 수정에 들어가면 신랑, 신부측 소속 정보를 수정할 수 있습니다.<p>
+
+
+<br>
+<br>
+<br>
+
+<div>
+  
+- - -
+  
+**하객 정보 등록**
+  
+![하객 정보 등록](https://github.com/user-attachments/assets/f4dfd2db-dfdd-4c9e-8cde-019700c193d7)
+
+
+<p>신랑측, 신부측 하객을 각각 등록할 수 있습니다.</p>
+
+
+<br>
+<br>
+<br>
+
+- - -
+
+**하객 정보 취합**
+
+![하객 정보 취합](https://github.com/user-attachments/assets/efc42a98-18c7-4d3f-85e7-cc3385e4c417)
+
+
+<p>관리자 메뉴의 하객 정보 관리 섹션에 들어가면 등록된 하객 목록을 볼 수 있습니다. <br>상단 바의 메뉴에서 관리자 페이지로 바로 이동 가능합니다.</p>
+
+
+<br>
+<br>
+<br>
+
+- - -
+
+**넘버링 기능**
+
+![넘버링 기능](https://github.com/user-attachments/assets/e70ddd36-257d-4bbf-aba4-e31142328a46)
+
+<p>해당 번호는 삭제해도 바뀌지 않습니다. <br>축의금 봉투 등에 기록해서 정보 취합에 이용하세요!</p>
+
+
+<br>
+<br>
+<br>
