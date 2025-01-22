@@ -2,7 +2,7 @@
 
 <br>
 
-<div align="center">
+<div>
   
 
 ![썸네일](https://github.com/user-attachments/assets/0262d6e8-5831-4b05-91e6-0fabe5a3e1e2)
@@ -30,7 +30,7 @@
 
 
 
-##기술 스택<br>
+**기술 스택**<br>
 <br>
 ![html5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=black) 
 ![css3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=black) 
@@ -45,25 +45,25 @@
 <br>
 <br>
 
-##프로젝트 소개
+**프로젝트 소개**
 
 <br>
 
 ![소속 정보 등록](https://github.com/user-attachments/assets/33ddb0aa-8626-4816-bd6b-eef4909b350b)
 
-<p align="center">정보 수정에 들어가면 신랑, 신부측 소속 정보를 수정할 수 있습니다.<p>
+<p>정보 수정에 들어가면 신랑, 신부측 소속 정보를 수정할 수 있습니다.<p>
 
 
 <br>
 <br>
 <br>
 
-<div align="center">
+<div>
   
 ![하객 정보 등록](https://github.com/user-attachments/assets/f4dfd2db-dfdd-4c9e-8cde-019700c193d7)
 
 
-<p align="center">신랑측, 신부측 하객을 각각 등록할 수 있습니다.</p>
+<p>신랑측, 신부측 하객을 각각 등록할 수 있습니다.</p>
 
 
 <br>
@@ -73,7 +73,7 @@
 ![하객 정보 취합](https://github.com/user-attachments/assets/efc42a98-18c7-4d3f-85e7-cc3385e4c417)
 
 
-<p align="center">관리자 메뉴의 하객 정보 관리 섹션에 들어가면 등록된 하객 목록을 볼 수 있습니다. <br>상단 바의 메뉴에서 관리자 페이지로 바로 이동 가능합니다.</p>
+<p>관리자 메뉴의 하객 정보 관리 섹션에 들어가면 등록된 하객 목록을 볼 수 있습니다. <br>상단 바의 메뉴에서 관리자 페이지로 바로 이동 가능합니다.</p>
 
 
 <br>
@@ -82,7 +82,7 @@
 
 ![넘버링 기능](https://github.com/user-attachments/assets/e70ddd36-257d-4bbf-aba4-e31142328a46)
 
-<p align="center">해당 번호는 삭제해도 바뀌지 않습니다. <br>축의금 봉투 등에 기록해서 정보 취합에 이용하세요!</p>
+<p>해당 번호는 삭제해도 바뀌지 않습니다. <br>축의금 봉투 등에 기록해서 정보 취합에 이용하세요!</p>
 
 
 <br>
