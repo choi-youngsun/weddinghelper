@@ -25,12 +25,7 @@
 
 </div>
 
-
-
-<br>
-<br>
-
-
+- - -
 
 <h3>기술 스택</h3>
 <br/>
@@ -47,7 +42,7 @@
 ![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
 <br/>
-
+- - -
 
 <br>
 <br>
@@ -68,7 +63,8 @@
 <br>
 
 <div>
-
+- - -
+  
 **하객 정보 등록**
   
 ![하객 정보 등록](https://github.com/user-attachments/assets/f4dfd2db-dfdd-4c9e-8cde-019700c193d7)
@@ -80,6 +76,8 @@
 <br>
 <br>
 <br>
+
+- - -
 
 **하객 정보 취합**
 
@@ -93,7 +91,9 @@
 <br>
 <br>
 
-**넘버링 기능능**
+- - -
+
+**넘버링 기능**
 
 ![넘버링 기능](https://github.com/user-attachments/assets/e70ddd36-257d-4bbf-aba4-e31142328a46)
 
