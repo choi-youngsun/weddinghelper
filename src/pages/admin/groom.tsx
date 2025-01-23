@@ -110,14 +110,16 @@ export default function AdminGroom() {
           하객 정보를 불러오는 중 문제가 발생했습니다.
         </div>
       ) : (
-        <AdminGuestTable
-          guestList={guests}
-          editModeId={editModeId}
-          side="groom"
-          onChange={handleChange}
-          onEditClick={handleEditClick}
-          onDeleteClick={handleDeleteClick}
-        />
+        <div className="rounded-lg  bg-[#ffffff52]">
+          <AdminGuestTable
+            guestList={guests}
+            editModeId={editModeId}
+            side="groom"
+            onChange={handleChange}
+            onEditClick={handleEditClick}
+            onDeleteClick={handleDeleteClick}
+          />
+        </div>
       )}
     </div>
   );
