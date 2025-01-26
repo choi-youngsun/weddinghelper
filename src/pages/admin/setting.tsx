@@ -141,7 +141,7 @@ export default function Setting() {
             </Button>
           </form>
           <p className="ml-2 mt-1 text-button-red">{errorMessage}</p>
-          <div className="mt-[1sdsd0px] flex flex-wrap gap-3">
+          <div className="mt-[10px] flex flex-wrap gap-3">
             {isLoading ? (
               <p className="ml-[10px] text-text-gray">Loading...</p>
             ) : selectedTag === 'bride' ? (
