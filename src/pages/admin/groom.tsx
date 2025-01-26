@@ -3,10 +3,12 @@ import {
   Guest,
   patchGroomGuestInfo,
 } from '@/api/guest/guestAPI';
+import Button from '@/components/@shared/Button';
 import Loading from '@/components/@shared/Loading';
 import { GuestInfo } from '@/components/admin/AdminGuestForm';
 import AdminGuestTable from '@/components/admin/AdminGuestTable';
 import { useGroomGuestData } from '@/hooks/useUserData';
+import { downloadList } from '@/utils/downloadExcel';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
@@ -98,7 +100,18 @@ export default function AdminGroom() {
 
   return (
     <div className="mx-auto mb-[100px] px-[20px] py-[80px] xl:w-[1280px]">
-      <p className="mb-[20px] text-md-regular">신랑측 관리자 페이지</p>
+      <div className="mb-[20px] flex items-center justify-between ">
+        <p className="text-md-regular">신랑측 관리자 페이지</p>
+        <Button
+          onClick={() => downloadList(guests, '신랑측 하객 정보')}
+          buttonColor="blue"
+          buttonWidth="fitToChildren"
+          buttonHeight={35}
+          className="px-[5px] text-[14px]"
+        >
+          📑엑셀로 내보내기
+        </Button>
+      </div>
       {isLoading ? (
         <div className="absolute inset-0 z-50 flex items-center justify-center">
           <div className="flex items-center justify-center">
