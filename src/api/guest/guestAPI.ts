@@ -1,6 +1,7 @@
 import axiosInstance from '../axiosInstance';
 
 export interface Guest {
+  orderNumber?: number; // 순서
   side?: string; // 신부측, 신랑측
   guestName?: string; // 하객 이름
   affiliation?: string; // 소속 (예: 가족, 친구)
