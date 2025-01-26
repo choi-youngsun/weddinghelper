@@ -5,9 +5,16 @@ import { useDropdown } from '@/hooks/useDropdown';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLogOut } from '@/api/auth/authAPI';
+import { useModal } from '@/hooks/useModal';
+import HowToModal from './HowToModal';
 
 export default function NavBar() {
   const { isOpen, onClose, onSwitch } = useDropdown();
+  const {
+    isOpen: isModalOpen,
+    onClose: onModalClose,
+    onOpen: onModalOpen,
+  } = useModal();
   const router = useRouter();
 
   const MenuButton = (
@@ -43,6 +50,8 @@ export default function NavBar() {
       logout();
     } else if (option.value === 'admin') {
       router.push('/admin');
+    } else if (option.value === 'howto') {
+      onModalOpen();
     } else {
       router.push('/admin/setting');
     }
@@ -52,6 +61,7 @@ export default function NavBar() {
     { label: '로그아웃', value: 'logout' },
     { label: '관리자 페이지', value: 'admin' },
     { label: '정보 수정', value: 'setting' },
+    { label: '이용 방법', value: 'howto' },
   ];
 
   return (
@@ -75,6 +85,7 @@ export default function NavBar() {
           width={200}
           className="text-center"
         />
+        <HowToModal onClose={onModalClose} isOpen={isModalOpen} />
       </div>
     </nav>
   );

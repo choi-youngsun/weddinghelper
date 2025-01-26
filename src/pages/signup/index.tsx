@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { postLogIn, postSignUp } from '@/api/auth/authAPI';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function SignUp() {
   const router = useRouter();
@@ -26,11 +27,14 @@ export default function SignUp() {
     password: '',
     confirmPassword: '',
   });
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormFields((prev) => ({ ...prev, [name]: value }));
+    setError(null);
 
     // 입력값에 따라 에러를 업데이트
     switch (name) {
@@ -58,9 +62,14 @@ export default function SignUp() {
       postLogIn(email, password),
     onSuccess: () => {
       console.log('로그인 성공!');
+      setError(null);
       router.push('/home'); // 로그인 성공 시 홈으로 이동
     },
+    onSettled: () => {
+      setIsLoading(false); // 요청 종료 후 로딩 상태 해제
+    },
     onError: (error) => {
+      setIsLoading(false);
       console.error('로그인 실패:', error);
     },
   });
@@ -89,11 +98,19 @@ export default function SignUp() {
       });
     },
     onError: (error) => {
-      console.error('회원가입 실패:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          setError(error.response.data.message);
+        }
+        setIsLoading(false);
+        console.error('회원가입 실패:', error);
+      }
     },
   });
 
   const handleSubmit = () => {
+    setIsLoading(true); // 요청 시작 시 로딩 상태 활성화
+    setError(''); // 이전 오류 메시지 초기화
     signup({
       name: formFields.name,
       email: formFields.email,
@@ -138,6 +155,7 @@ export default function SignUp() {
           onBlur={() => validateEmail('email', formFields.email)}
           errorMessage={errors.email?.message}
         />
+        <p className="ml-2 mt-1 text-button-red">{error}</p>
       </div>
       <div>
         <p className="text-md-regular">비밀번호</p>
@@ -179,7 +197,7 @@ export default function SignUp() {
         onClick={handleSubmit}
         disabled={!isAllInputFilled()}
       >
-        회원가입하기
+        {isLoading ? '회원가입 중...' : '회원가입하기'}
       </Button>
       <p className="text-right text-sm-regular md:text-md-regular">
         이미 회원이신가요?
