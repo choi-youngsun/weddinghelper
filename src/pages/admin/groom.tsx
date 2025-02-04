@@ -10,13 +10,19 @@ import AdminGuestTable from '@/components/admin/AdminGuestTable';
 import { useGroomGuestData } from '@/hooks/useUserData';
 import { downloadList } from '@/utils/downloadExcel';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function AdminGroom() {
-  const { data, isLoading, isError } = useGroomGuestData();
+  const [editModeId, setEditModeId] = useState<string | null>(null); // 수정 모드 상태
+  const { data, isLoading, isError, refetch } = useGroomGuestData(
+    editModeId !== null
+  );
+
   const groomGuest = data?.user?.groomGuests || [];
   const [guests, setGuests] = useState<GuestInfo[]>([]); // 전체 리스트 관리
-  const [editModeId, setEditModeId] = useState<string | null>(null); // 수정 모드 상태
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null); // 스크롤 컨테이너 참조
+
   const queryClient = useQueryClient();
 
   // 데이터가 로드될 때 상태를 업데이트
@@ -25,6 +31,14 @@ export default function AdminGroom() {
       setGuests(groomGuest);
     }
   }, [groomGuest, isLoading]);
+
+  useEffect(() => {
+    // 새로운 데이터가 추가되면 스크롤을 맨 아래로 내림
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop =
+        scrollContainerRef.current.scrollHeight;
+    }
+  }, [guests]); // guests 상태가 변경될 때마다 실행
 
   const handleChange = (id: string, name: string, value: string | number) => {
     setGuests((prev) =>
@@ -93,14 +107,22 @@ export default function AdminGroom() {
     }
   };
 
+  const handleFetchClick = async () => {
+    try {
+      await refetch(); // refetch 호출
+    } catch (error) {
+      console.error('Error refetching data:', error);
+    }
+  };
+
   const handleDeleteClick = (id: string) => {
     deleteGroomGuestData(id);
     console.log(id, '번째 하객 삭제!');
   };
 
   return (
-    <div className="mx-auto mb-[100px] px-[20px] py-[80px] xl:w-[1280px]">
-      <div className="mb-[20px] flex items-center justify-between ">
+    <div className="mx-auto flex flex-col items-center px-[20px] py-[80px] xl:w-[1280px]">
+      <div className="mb-[20px] flex w-full items-center justify-between ">
         <p className="text-md-regular">신랑측 관리자 페이지</p>
         <Button
           onClick={() => downloadList(guests, '신랑측 하객 정보')}
@@ -123,16 +145,29 @@ export default function AdminGroom() {
           하객 정보를 불러오는 중 문제가 발생했습니다.
         </div>
       ) : (
-        <div className="rounded-lg  bg-[#ffffff52]">
-          <AdminGuestTable
-            guestList={guests}
-            editModeId={editModeId}
-            side="groom"
-            onChange={handleChange}
-            onEditClick={handleEditClick}
-            onDeleteClick={handleDeleteClick}
-          />
-        </div>
+        <>
+          <div
+            ref={scrollContainerRef}
+            className="overflow-y-scroll rounded-lg bg-[#ffffff52] md:max-h-[700px] xl:max-h-[600px]"
+          >
+            <AdminGuestTable
+              guestList={guests}
+              editModeId={editModeId}
+              side="groom"
+              onChange={handleChange}
+              onEditClick={handleEditClick}
+              onDeleteClick={handleDeleteClick}
+            />
+          </div>
+          <Button
+            buttonColor="blue"
+            buttonWidth="fitToChildren"
+            onClick={handleFetchClick}
+            className="mt-3 px-10"
+          >
+            목록 새로고침
+          </Button>
+        </>
       )}
     </div>
   );

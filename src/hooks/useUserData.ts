@@ -23,9 +23,10 @@ export const useBrideGuestData = (isEditing: boolean) => {
   });
 };
 
-export const useGroomGuestData = () => {
+export const useGroomGuestData = (isEditing: boolean) => {
   return useQuery({
     queryKey: ['groomGuest'],
     queryFn: () => getUserSetting(['groomGuests']),
+    refetchInterval: isEditing ? false : 7000,
   });
 };
