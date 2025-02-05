@@ -1,4 +1,5 @@
 import { patchUserSetting } from '@/api/admin/settingAPI';
+import { useAuth } from '@/components/@shared/AuthContext';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
@@ -8,12 +9,14 @@ import axios from 'axios';
 import { useState } from 'react';
 
 export default function Setting() {
+  const { isAuthenticated } = useAuth();
+
   const [selectedTag, setSelectedTag] = useState<'bride' | 'groom'>('bride');
   const [tagValue, setTagValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useUserAffiliationData();
+  const { data, isLoading } = useUserAffiliationData(isAuthenticated);
   const [isPending, setIsPending] = useState(false);
 
   const { mutate: patchAffiliation } = useMutation({
