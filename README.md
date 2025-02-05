@@ -95,6 +95,18 @@
 
 - - -
 
+**엑셀로 내보내기**
+
+![엑셀로 내보내기](https://github.com/user-attachments/assets/33df5d56-863a-440d-9a76-d4df5db0f4e5)
+
+<p>엑셀 파일로 하객 데이터를 관리할 수 있습니다.</p>
+
+<br>
+<br>
+<br>
+
+- - -
+
 **넘버링 기능**
 
 ![넘버링 기능](https://github.com/user-attachments/assets/e70ddd36-257d-4bbf-aba4-e31142328a46)
