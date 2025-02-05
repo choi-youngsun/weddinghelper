@@ -36,30 +36,36 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // 401 에러(액세스 토큰 만료)일 때만 리프레시 토큰을 사용하여 액세스 토큰을 갱신
-    if (
-      error.response &&
-      error.response.status === 401 &&
-      !originalRequest._retry
-    ) {
-      originalRequest._retry = true;
+    // `_retryCount`가 없으면 0으로 초기화
+    if (!originalRequest._retryCount) {
+      originalRequest._retryCount = 0;
+    }
+
+    // 401 에러(액세스 토큰 만료)일 때만 리프레시 토큰을 사용하여 액세스 토큰 갱신
+    if (error.response?.status === 401 && originalRequest._retryCount < 2) {
+      originalRequest._retryCount += 1; // 재시도 횟수 증가
 
       try {
         // 리프레시 토큰을 이용해 새 액세스 토큰을 요청
-        await axios.post(
+        const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`
         );
-        return axios(originalRequest); // 요청 재시도
+
+        if (response.status === 200) {
+          return axiosInstance(originalRequest); // 요청 재시도
+        } else {
+          return Promise.reject('리프레시 토큰 갱신 실패');
+        }
       } catch (refreshError) {
-        // 리프레시 토큰이 실패하면 로그아웃 등의 처리를 할 수 있습니다.
         console.error('리프레시 토큰 요청 실패:', refreshError);
-        // 로그인 페이지로 리디렉션
-        window.location.href = 'http://localhost:3000/login';
-        return Promise.reject(refreshError);
+
+        // 리프레시 토큰 실패 시, 더 이상 원본 요청을 재시도하지 않도록 처리
+        return Promise.reject(refreshError); // 원본 요청 중단
       }
     }
 
-    return Promise.reject(error); // 그 외의 에러는 그대로 반환
+    // 그 외의 에러는 그대로 반환
+    return Promise.reject(error);
   }
 );
 
