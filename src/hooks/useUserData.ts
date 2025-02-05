@@ -15,16 +15,18 @@ export const useUserAffiliationData = () => {
   });
 };
 
-export const useBrideGuestData = () => {
+export const useBrideGuestData = (isEditing: boolean) => {
   return useQuery({
     queryKey: ['brideGuest'],
     queryFn: () => getUserSetting(['brideGuests']),
+    refetchInterval: isEditing ? false : 7000,
   });
 };
 
-export const useGroomGuestData = () => {
+export const useGroomGuestData = (isEditing: boolean) => {
   return useQuery({
     queryKey: ['groomGuest'],
     queryFn: () => getUserSetting(['groomGuests']),
+    refetchInterval: isEditing ? false : 7000,
   });
 };

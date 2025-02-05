@@ -18,7 +18,7 @@ export default function AdminGuestTable({
   onDeleteClick,
 }: AdminGuestTableForm) {
   return (
-    <section className="w-full overflow-auto rounded-[16px] p-3 pb-[100px]">
+    <section className="w-full overflow-auto rounded-[16px] p-3 pb-[20px]">
       <table className="w-full min-w-[700px] table-fixed border-collapse text-[18px]">
         <thead>
           <tr className="border-b border-[#686868]">
