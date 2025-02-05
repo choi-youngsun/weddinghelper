@@ -50,7 +50,14 @@ export default function AdminGuestTable({
                 <br />
                 <br />
                 <br />
+                <br />
+                <br />
                 아직 등록된 하객이 없어요!
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
               </td>
             </tr>
           )}
