@@ -14,7 +14,7 @@ import AuthLayout from '@/components/@shared/AuthLayout';
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useMemo(() => new QueryClient(), []);
   const router = useRouter();
-  const noAuthRequired = ['/', '/login']; // 로그인 체크 제외할 페이지 목록
+  const noAuthRequired = ['/', '/login', '/signup']; // 로그인 체크 제외할 페이지 목록
 
   const isExcluded = noAuthRequired.includes(router.pathname);
 
