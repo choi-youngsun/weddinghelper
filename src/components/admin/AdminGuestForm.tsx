@@ -2,6 +2,7 @@ import { useModal } from '@/hooks/useModal';
 import Button from '../@shared/Button';
 import Input from '../@shared/Input';
 import ConfirmModal from './ConfirmModal';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export type GuestInfo = {
   _id: string;
@@ -22,6 +23,7 @@ type BrideAdminFormProps = {
   onChange: (id: string, name: string, value: string | number) => void;
   onEditClick: (id: string) => void;
   onDeleteClick: (id: string) => void;
+  className?: string;
 };
 
 export default function AdminGuestForm({
@@ -31,21 +33,14 @@ export default function AdminGuestForm({
   onChange,
   onEditClick,
   onDeleteClick,
+  className = '',
 }: BrideAdminFormProps) {
   const { isOpen, onClose, onOpen } = useModal();
 
   return (
-    <tr
-      key={guest.orderNumber}
-      className="border-b border-[#45454511] text-center"
-    >
-      <td className="break-words bg-[#ffffff74] px-2 py-1">
-        {guest.orderNumber}
-      </td>
+    <tr key={guest.orderNumber} className={`text-center ${className}`}>
+      <td className="break-words px-2 py-1 text-[15px]">{guest.orderNumber}</td>
       <td className="break-words px-2 py-1">
-        {guest.side === 'bride' ? '신부측' : '신랑측'}
-      </td>
-      <td className="break-words bg-[#ffffff74] px-2 py-1">
         {isEditMode ? (
           <Input
             name="affiliation"
@@ -85,7 +80,7 @@ export default function AdminGuestForm({
           guest.guestName
         )}
       </td>
-      <td className="break-words bg-[#ffffff74] px-2 py-1">
+      <td className="break-words px-2 py-1">
         {isEditMode ? (
           <Input
             name="giftAmount"
@@ -103,7 +98,7 @@ export default function AdminGuestForm({
             className="text-sm"
           />
         ) : (
-          guest.giftAmount
+          formatCurrency(guest.giftAmount)
         )}
       </td>
       <td className="break-words px-2 py-1">
@@ -127,7 +122,7 @@ export default function AdminGuestForm({
           guest.ticketCount
         )}
       </td>
-      <td className="break-words  bg-[#ffffff74] px-2 py-1">
+      <td className="break-words px-2 py-1">
         {isEditMode ? (
           <Input
             name="note"

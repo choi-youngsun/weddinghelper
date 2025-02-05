@@ -1,4 +1,5 @@
 import { patchUserSetting } from '@/api/admin/settingAPI';
+import { useAuth } from '@/components/@shared/AuthContext';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Tag from '@/components/settings/Tag';
@@ -8,12 +9,15 @@ import axios from 'axios';
 import { useState } from 'react';
 
 export default function Setting() {
+  const { isAuthenticated } = useAuth();
+
   const [selectedTag, setSelectedTag] = useState<'bride' | 'groom'>('bride');
   const [tagValue, setTagValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useUserAffiliationData();
+  const { data, isLoading } = useUserAffiliationData(isAuthenticated);
+  const [isPending, setIsPending] = useState(false);
 
   const { mutate: patchAffiliation } = useMutation({
     mutationFn: ({
@@ -32,6 +36,7 @@ export default function Setting() {
     onSettled: () => {
       // 쿼리 무효화 및 리패치
       queryClient.invalidateQueries({ queryKey: ['user', 'affiliation'] });
+      setIsPending(false);
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -39,6 +44,7 @@ export default function Setting() {
           setErrorMessage(error.response.data.message);
         }
         console.error('소속 수정 실패:', error);
+        setIsPending(false);
       }
     },
   });
@@ -54,6 +60,7 @@ export default function Setting() {
   };
 
   const handleTagSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setIsPending(true);
     event.preventDefault(); // 페이지 새로고침 방지
     if (selectedTag === 'bride') {
       patchAffiliation({
@@ -71,6 +78,7 @@ export default function Setting() {
   };
 
   const handleTagDelete = (selectedTag: string, tagValue: string) => {
+    setIsPending(true);
     if (selectedTag === 'bride') {
       patchAffiliation({
         side: 'brideSide',
@@ -125,18 +133,18 @@ export default function Setting() {
               placeholder="추가할 소속 입력"
               value={tagValue}
               onChange={handleTagChange}
-              errorMessage={errorMessage}
             />
             <Button
               buttonWidth="fitToChildren"
               className="shrink-0 px-[20px]"
               type="submit"
-              disabled={tagValue === '' || errorMessage !== ''}
+              disabled={tagValue === '' || errorMessage !== '' || isPending}
             >
-              추가
+              {isPending ? '로딩..' : '추가'}
             </Button>
           </form>
-          <div className="mt-[20px] flex flex-wrap gap-3">
+          <p className="ml-2 mt-1 text-button-red">{errorMessage}</p>
+          <div className="mt-[10px] flex flex-wrap gap-3">
             {isLoading ? (
               <p className="ml-[10px] text-text-gray">Loading...</p>
             ) : selectedTag === 'bride' ? (
@@ -152,7 +160,7 @@ export default function Setting() {
                 ))
               ) : (
                 // brideSide가 없을 때
-                <p className="mx-auto mt-[25%] text-center text-text-gray">
+                <p className="mx-auto mt-[100px] text-center text-text-gray">
                   아직 등록된 신부측 소속 정보가 없어요!
                 </p>
               )
@@ -168,7 +176,7 @@ export default function Setting() {
               ))
             ) : (
               // groomSide가 없을 때
-              <p className="mx-auto mt-[25%] text-center text-text-gray">
+              <p className="mx-auto mt-[100px] text-center text-text-gray">
                 아직 등록된 신랑측 소속 정보가 없어요!
               </p>
             )}

@@ -8,10 +8,15 @@ import { persistQueryClient } from '@tanstack/react-query-persist-client';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useEffect, useMemo } from 'react';
+import { AuthProvider } from '@/components/@shared/AuthContext';
+import AuthLayout from '@/components/@shared/AuthLayout';
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useMemo(() => new QueryClient(), []);
   const router = useRouter();
+  const noAuthRequired = ['/', '/login']; // 로그인 체크 제외할 페이지 목록
+
+  const isExcluded = noAuthRequired.includes(router.pathname);
 
   useEffect(() => {
     // window가 정의된 경우에만 실행
@@ -44,7 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -89,18 +94,31 @@ export default function App({ Component, pageProps }: AppProps) {
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${backgroundColor()} mx-auto min-h-screen w-full`}>
-        <QueryClientProvider client={queryClient}>
-          {' '}
-          <NavBar />
-          <div>
-            <Component {...pageProps} />
-            {process.env.NODE_ENV === 'development' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-          </div>
-        </QueryClientProvider>
-      </main>
-    </>
+      <AuthProvider>
+        <main className={`${backgroundColor()} mx-auto min-h-screen w-full`}>
+          {isExcluded ? (
+            <div>
+              <NavBar />
+              <div>
+                <Component {...pageProps} />
+                {process.env.NODE_ENV === 'development' && (
+                  <ReactQueryDevtools initialIsOpen={false} />
+                )}
+              </div>
+            </div>
+          ) : (
+            <AuthLayout>
+              <NavBar />
+              <div>
+                <Component {...pageProps} />
+                {process.env.NODE_ENV === 'development' && (
+                  <ReactQueryDevtools initialIsOpen={false} />
+                )}
+              </div>
+            </AuthLayout>
+          )}
+        </main>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

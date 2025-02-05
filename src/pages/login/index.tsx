@@ -1,5 +1,5 @@
 import { getUserSetting } from '@/api/admin/settingAPI';
-import { postLogIn } from '@/api/auth/authAPI';
+import { fetchAuthStatus, postLogIn } from '@/api/auth/authAPI';
 import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -50,6 +50,8 @@ export default function Login() {
     },
     onSettled: () => {
       setIsLoading(false); // 요청 종료 후 로딩 상태 해제
+      fetchAuthStatus();
+      queryClient.invalidateQueries({ queryKey: ['authStatus'] });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
