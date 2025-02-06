@@ -49,7 +49,7 @@ export default function HowToModal({ isOpen, onClose }: HowToModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
-      <div className="flex h-[530px] w-[760px] flex-col justify-between">
+      <div className="flex  flex-col justify-between gap-[10px] md:h-[530px] md:w-[760px]">
         <p className="mt-[20px] text-center text-md-extraBold">
           어떻게 사용하나요?
         </p>
@@ -62,13 +62,13 @@ export default function HowToModal({ isOpen, onClose }: HowToModalProps) {
           className="mx-auto"
           quality={100}
         />
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between gap-[5px] ">
           <Button
             onClick={handlePrevClick}
             disabled={currentPage === 0}
             buttonWidth="fitToChildren"
             buttonHeight={40}
-            className="px-[10px]"
+            className="text-nowrap px-[10px]"
           >
             이전
           </Button>
@@ -80,7 +80,7 @@ export default function HowToModal({ isOpen, onClose }: HowToModalProps) {
             disabled={currentPage === pages.length - 1}
             buttonWidth="fitToChildren"
             buttonHeight={40}
-            className="px-[10px]"
+            className="text-nowrap px-[10px]"
           >
             다음
           </Button>
