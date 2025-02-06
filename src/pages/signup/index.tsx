@@ -3,13 +3,15 @@ import Button from '@/components/@shared/Button';
 import Input from '@/components/@shared/Input';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { postLogIn, postSignUp } from '@/api/auth/authAPI';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchAuthStatus, postLogIn, postSignUp } from '@/api/auth/authAPI';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { getUserSetting } from '@/api/admin/settingAPI';
 
 export default function SignUp() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const {
     errors,
@@ -60,13 +62,23 @@ export default function SignUp() {
   const { mutate: login } = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       postLogIn(email, password),
-    onSuccess: () => {
+    onSuccess: async () => {
       console.log('로그인 성공!');
       setError(null);
       router.push('/home'); // 로그인 성공 시 홈으로 이동
+      // 사용자 정보를 가져와서 쿼리 데이터에 저장
+      const userData = await getUserSetting(); // 사용자 정보 요청
+
+      // 'user' 쿼리에 저장
+      queryClient.setQueryData(['user'], userData);
+
+      // 로컬 스토리지에 유저 정보 저장
+      localStorage.setItem('user', JSON.stringify(userData));
     },
     onSettled: () => {
       setIsLoading(false); // 요청 종료 후 로딩 상태 해제
+      fetchAuthStatus();
+      queryClient.invalidateQueries({ queryKey: ['authStatus'] });
     },
     onError: (error) => {
       setIsLoading(false);

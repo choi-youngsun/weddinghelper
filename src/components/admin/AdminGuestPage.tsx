@@ -113,7 +113,7 @@ export default function AdminGuestPage({ side }: AdminGuestPageProps) {
   };
 
   return (
-    <div className="mx-auto flex flex-col items-center overflow-x-scroll px-[20px] py-[80px] xl:w-[1280px]">
+    <div className="ml-0 flex flex-col items-center overflow-x-scroll px-[20px] py-[80px] xl:w-[1280px]">
       <div className="mb-[20px] flex w-full items-center justify-between">
         <p className="text-md-regular">
           {side === 'bride' ? '신부측' : '신랑측'} 관리자 페이지
@@ -143,7 +143,7 @@ export default function AdminGuestPage({ side }: AdminGuestPageProps) {
         <>
           <div
             ref={scrollContainerRef}
-            className="overflow-scroll rounded-lg bg-[#ffffff52] md:max-h-[700px] xl:max-h-[600px]"
+            className="w-full overflow-scroll rounded-lg bg-[#ffffff52] md:max-h-[700px] xl:max-h-[600px]"
           >
             <AdminGuestTable
               guestList={guests}
