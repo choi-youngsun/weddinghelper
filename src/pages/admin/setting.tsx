@@ -136,11 +136,11 @@ export default function Setting() {
             />
             <Button
               buttonWidth="fitToChildren"
-              className="shrink-0 px-[20px]"
+              className="shrink-0"
               type="submit"
               disabled={tagValue === '' || errorMessage !== '' || isPending}
             >
-              {isPending ? '로딩..' : '추가'}
+              <p className="w-[70px]">{isPending ? '로딩..' : '추가'}</p>
             </Button>
           </form>
           <p className="ml-2 mt-1 text-button-red">{errorMessage}</p>
