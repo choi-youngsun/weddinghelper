@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const publicAxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000, // Request timeout in milliseconds
   headers: {
     'Content-Type': 'application/json',
   },
@@ -10,7 +9,6 @@ export const publicAxiosInstance = axios.create({
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000, // Request timeout in milliseconds
   headers: {
     'Content-Type': 'application/json',
   },
