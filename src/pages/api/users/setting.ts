@@ -96,6 +96,8 @@ export default authenticate(async function handler(
             responseData.brideGuests = user.brideGuests;
           } else if (s === 'groomGuests') {
             responseData.groomGuests = user.groomGuests;
+          } else if (s === 'name') {
+            responseData.name = user.name;
           }
         });
       }
