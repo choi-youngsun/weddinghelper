@@ -40,18 +40,19 @@ export default function Login() {
       router.push('/home');
 
       // 사용자 정보를 가져와서 쿼리 데이터에 저장
-      const userData = await getUserSetting(); // 사용자 정보 요청
+      const userData = await getUserSetting(['name']); // 사용자 정보 요청
 
       // 'user' 쿼리에 저장
       queryClient.setQueryData(['user'], userData);
 
       // 로컬 스토리지에 유저 정보 저장
       localStorage.setItem('user', JSON.stringify(userData));
+
+      fetchAuthStatus();
+      queryClient.invalidateQueries({ queryKey: ['authStatus'] });
     },
     onSettled: () => {
       setIsLoading(false); // 요청 종료 후 로딩 상태 해제
-      fetchAuthStatus();
-      queryClient.invalidateQueries({ queryKey: ['authStatus'] });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {

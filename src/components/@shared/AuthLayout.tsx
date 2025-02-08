@@ -13,11 +13,13 @@ export default function AuthLayout({
   const { isOpen, onOpen, onClose } = useModal();
 
   useEffect(() => {
+    if (isAuthenticated === undefined) return; // 로딩 중에는 실행하지 않음
+
     const timeout = setTimeout(() => {
-      if (!isAuthenticated) {
+      if (isAuthenticated === false) {
         onOpen();
       }
-    }, 1000); // 1초 딜레이
+    }, 1000);
 
     return () => clearTimeout(timeout); // cleanup 함수 추가
   }, [isAuthenticated, onOpen]);
