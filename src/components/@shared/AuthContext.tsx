@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchAuthStatus } from '@/api/auth/authAPI';
+import { useAuthStatus } from '@/hooks/useAuthState';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -11,14 +10,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { data, isLoading } = useQuery({
-    queryKey: ['authStatus'],
-    queryFn: fetchAuthStatus,
-    retry: false,
-  });
+  const { data, isLoading } = useAuthStatus();
 
   const authValue = {
-    isAuthenticated: data?.isAuthenticated ?? false,
+    isAuthenticated: isLoading ? undefined : (data?.isAuthenticated ?? false),
     user: data?.user ?? null,
     isLoading,
   };

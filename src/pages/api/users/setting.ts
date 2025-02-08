@@ -2,6 +2,7 @@ import UserData from '@/db/models/user';
 import { NextApiResponse } from 'next';
 import { ExtendedNextApiRequest } from '@/api/authenticate';
 import authenticate from '@/api/authenticate';
+import mongoose from 'mongoose';
 
 export default authenticate(async function handler(
   req: ExtendedNextApiRequest,
@@ -10,7 +11,7 @@ export default authenticate(async function handler(
   if (req.method === 'PATCH') {
     const { side, affiliation, action } = req.body; // action, side, affiliation 정보 받음
 
-    const userId = req.user.id; // 인증된 사용자 정보를 req.user에서 가져옴
+    const userId = new mongoose.Types.ObjectId(String(req.user.id)); // 인증된 사용자 정보를 req.user에서 가져옴
 
     try {
       const user = await UserData.findOne({ _id: userId });
@@ -67,8 +68,7 @@ export default authenticate(async function handler(
       res.status(500).json({ message: 'Server error' });
     }
   } else if (req.method === 'GET') {
-    const userId = req.user.id;
-
+    const userId = new mongoose.Types.ObjectId(String(req.user.id));
     const { side } = req.query; // 요청에서 side 값 가져오기
 
     try {
@@ -96,6 +96,8 @@ export default authenticate(async function handler(
             responseData.brideGuests = user.brideGuests;
           } else if (s === 'groomGuests') {
             responseData.groomGuests = user.groomGuests;
+          } else if (s === 'name') {
+            responseData.name = user.name;
           }
         });
       }
