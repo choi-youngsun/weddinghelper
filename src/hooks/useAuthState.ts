@@ -1,12 +1,5 @@
+import { fetchAuthStatus } from '@/api/auth/authAPI';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-
-const fetchAuthStatus = async () => {
-  const response = await axios.get('/api/auth/check', {
-    withCredentials: true,
-  });
-  return response.data;
-};
 
 export function useAuthStatus() {
   return useQuery({
